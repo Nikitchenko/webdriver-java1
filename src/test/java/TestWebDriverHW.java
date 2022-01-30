@@ -27,7 +27,7 @@ public class TestWebDriverHW {
     public static final String ITEM_ADDED_MESSAGE_XPATH = "//h3[@class = 'modal-title' and text() = 'Item added to your basket']";
 
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
         //Set Chromedriver
         System.setProperty("webdriver.chrome.driver", DRIVER_PATH);
@@ -93,7 +93,6 @@ public class TestWebDriverHW {
         WebElement theBook = driver.findElement(By.xpath("//a[ contains(text(), 'Selenium Design Patterns and Best Practices')]"));
         theBook.click();
 
-        Thread.sleep(2000);
         System.out.println(driver.getCurrentUrl());
         driver.quit();
     }
