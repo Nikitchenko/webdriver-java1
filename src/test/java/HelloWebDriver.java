@@ -8,7 +8,5 @@ public class HelloWebDriver {
         WebDriver driver = new ChromeDriver();
         driver.get("http://seleniumhq.org");
         Thread.sleep(2000);
-        driver.quit();
-
     }
 }
