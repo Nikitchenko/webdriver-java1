@@ -25,6 +25,6 @@ public class MenuSearchSteps {
 
     @Then("the {string} has a correct placeholder {string}")
     public void menuSearchHasCorrectPlaceholder(String menuSearch, String placeholder) {
-        assertEquals( "Not correct placeholder", homePage.getMenuSearch().getAttribute("placeholder"));
+        assertEquals( menuSearch +" has incorrect placeholder. ", homePage.getMenuSearch().getAttribute("placeholder"), placeholder);
     }
 }
