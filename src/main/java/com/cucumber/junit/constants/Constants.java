@@ -2,6 +2,7 @@ package com.cucumber.junit.constants;
 
 public class Constants {
     public static final String BOOKDEPOSITORY_URL = "https://www.bookdepository.com";
+    public static final String PDP_URL = BOOKDEPOSITORY_URL + "/pdp/";
     public static final String THE_BASKET_URL = BOOKDEPOSITORY_URL + "/basket";
     public static final String THE_CHECKOUT_URL = BOOKDEPOSITORY_URL + "/payment/guest";
 

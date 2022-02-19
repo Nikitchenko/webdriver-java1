@@ -19,7 +19,7 @@ public class MenuSearchSteps {
     public void userLookAtMainHeader() {
     }
 
-    @Then("the user sees {string} which is input field")
+    @When("the user sees {string} which is input field")
     public void userSeesMenuSearchThatInputField(String menuSearch) {
     }
 

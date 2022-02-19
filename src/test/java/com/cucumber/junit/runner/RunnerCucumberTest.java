@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
                 "json:target/cucumber-reports/CucumberTests.json",
                 "junit:target/cucumber-reports/CucumberTests.xml"},
         monochrome = true,
-        tags = "@smoke",
+        tags = "@checkout",
         glue = "com.cucumber.junit",
         features = "src/test/resources/com.cucumber.junit.features"
 )
