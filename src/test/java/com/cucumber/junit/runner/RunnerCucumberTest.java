@@ -5,7 +5,11 @@ import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(plugin = "pretty",
+@CucumberOptions(
+        plugin = {"pretty",
+                "html:target/cucumber-reports/CucumberTests.html",
+                "json:target/cucumber-reports/CucumberTests.json",
+                "junit:target/cucumber-reports/CucumberTests.xml"},
         monochrome = true,
         tags = "@smoke",
         glue = "com.cucumber.junit",
@@ -13,6 +17,5 @@ import org.junit.runner.RunWith;
 )
 
 public class RunnerCucumberTest {
-
 
 }

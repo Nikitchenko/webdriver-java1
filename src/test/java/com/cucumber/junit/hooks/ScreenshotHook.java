@@ -10,10 +10,12 @@ public class ScreenshotHook {
 
     private static final String PNG_FILE_EXTENSION = "image/png";
 
-//    @After
-//    public void takeScreenshot(Scenario scenario){
-//        scenario.write(DriverManager.getDriver().getCurrentUrl());
-//        byte[] screenshot = ((TakesScreenshot) DriverManager.getDriver()).getScreenshotAs(OutputType.BYTES);
-//        scenario.embed(screenshot, PNG_FILE_EXTENSION, scenario.getName());
-//    }
+    @After
+    public void takeScreenshot(Scenario scenario){
+        scenario.log(DriverManager.getDriver().getCurrentUrl());
+        // log instead of write
+        byte[] screenshot = ((TakesScreenshot) DriverManager.getDriver()).getScreenshotAs(OutputType.BYTES);
+        scenario.attach(screenshot, PNG_FILE_EXTENSION, scenario.getName());
+        // attach instead of embed
+    }
 }
