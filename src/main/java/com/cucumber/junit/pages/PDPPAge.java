@@ -21,12 +21,16 @@ public class PDPPAge extends AbstractPage {
         DriverManager.getDriver().get(PDP_URL + isbn);
     }
 
-    public WebElement getAddToBasketBtn() {
-        return addToBasketBtn;
-    }
-
     public WebElement getSalePriceElem() {
         return salePriceElem;
+    }
+
+    public String getSalePrice() {
+        return salePriceElem.getText();
+    }
+
+    public WebElement getAddToBasketBtn() {
+        return addToBasketBtn;
     }
 
     public WebElement getBasketCheckoutBtn() {

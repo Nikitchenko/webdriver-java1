@@ -23,7 +23,7 @@ public class CheckoutSteps {
     public void openSpecificPDPOfTheBookWithISBN(String isbn) {
         pdpPage = new PDPPAge();
         pdpPage.openPDPPage(isbn);
-        bookPricePDP = pdpPage.getSalePriceElem().getText();
+        bookPricePDP = pdpPage.getSalePrice();
     }
 
     @When("the user clicks on *Add to basket* button")
