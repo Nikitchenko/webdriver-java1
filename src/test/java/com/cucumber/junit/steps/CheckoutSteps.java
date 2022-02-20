@@ -7,8 +7,7 @@ import com.cucumber.junit.pages.PDPPAge;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CheckoutSteps {
 
@@ -31,7 +30,7 @@ public class CheckoutSteps {
         pdpPage.getAddToBasketBtn().click();
     }
 
-    @Then("*Item add to your basket* pop-up opens")
+    @Then("*Item added to your basket* pop-up opens")
     public void itemAddToYourBasketPopUpOpens() {
     }
 
