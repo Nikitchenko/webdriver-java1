@@ -15,7 +15,6 @@ public abstract class AbstractPage {
         return DriverManager.getDriver().findElement(by);
     }
 
-
     public boolean isElementDisplayed(By by){
         return !findElement(by).isDisplayed();
     }

@@ -4,14 +4,9 @@ import com.cucumber.junit.driver.DriverManager;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import static com.cucumber.junit.constants.Constants.BASKET_URL;
 import static com.cucumber.junit.constants.Constants.CHECKOUT_URL;
 
-public class CheckoutPage extends AbstractPage{
-
-    public void openCheckoutPage(){
-        DriverManager.getDriver().get(CHECKOUT_URL);
-    }
+public class CheckoutPage extends AbstractPage {
 
     @FindBy(xpath = "//strong[text() = 'Sub-total']/../../dd[@class = 'text-right']")
     private WebElement checkoutSubtotalElem;
@@ -29,19 +24,34 @@ public class CheckoutPage extends AbstractPage{
     private WebElement buyNowBtn;
 
     @FindBy(xpath = "//input[@name='emailAddress']/following-sibling::div[@class = 'error-block']")
-    private WebElement invalidErrorMessage;
+    private WebElement invalidErrorMessageElem;
 
+    public void openCheckoutPage() {
+        DriverManager.getDriver().get(CHECKOUT_URL);
+    }
 
-    public WebElement getCheckoutSubtotalElem(){
+    public WebElement getCheckoutSubtotalElem() {
         return checkoutSubtotalElem;
+    }
+
+    public String getCheckoutSubtotal() {
+        return checkoutSubtotalElem.getText();
     }
 
     public WebElement getCheckoutVATElem() {
         return checkoutVATElem;
     }
 
+    public String getCheckoutVAT() {
+        return checkoutVATElem.getText();
+    }
+
     public WebElement getCheckoutTotalElem() {
         return checkoutTotalElem;
+    }
+
+    public String getCheckoutTotal() {
+        return checkoutTotalElem.getText();
     }
 
     public WebElement getCheckoutEmailAddressField() {
@@ -52,9 +62,11 @@ public class CheckoutPage extends AbstractPage{
         return buyNowBtn;
     }
 
-    public WebElement getInvalidErrorMessage() {
-        return invalidErrorMessage;
+    public WebElement getInvalidErrorMessageElem() {
+        return invalidErrorMessageElem;
     }
 
-
+    public String getInvalidErrorMessage() {
+        return invalidErrorMessageElem.getText();
+    }
 }

@@ -5,9 +5,7 @@ import com.cucumber.junit.pages.PDPPAge;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-
 import static org.junit.jupiter.api.Assertions.*;
-
 
 public class Checkout1Steps {
 
@@ -23,8 +21,8 @@ public class Checkout1Steps {
     public void theUserIsOnOfTheBookWith(String isbn) {
         pdpPage = new PDPPAge();
         pdpPage.openPDPPage(isbn);
-        System.out.println(pdpPage.getSalePrice().getText());
-        bookPricePDP = pdpPage.getSalePrice().getText();
+        System.out.println(pdpPage.getSalePriceElem().getText());
+        bookPricePDP = pdpPage.getSalePriceElem().getText();
     }
 
     @When("users clicks on {string} button")
@@ -44,8 +42,8 @@ public class Checkout1Steps {
 
     @Then("the {string} page opens with correct {string}")
     public void thePageOpensWithCorrect(String basket, String total) {
-        basketTotal = basketPage.getTotalPrice().getText();
-        basketItemTotal = basketPage.getItemTotal().getText();
+        basketTotal = basketPage.getTotalPriceElem().getText();
+        basketItemTotal = basketPage.getItemTotalElem().getText();
         System.out.println(basketTotal);
         System.out.println(basketItemTotal);
 

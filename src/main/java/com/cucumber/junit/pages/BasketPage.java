@@ -5,32 +5,39 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import static com.cucumber.junit.constants.Constants.BASKET_URL;
-import static com.cucumber.junit.constants.Constants.PDP_URL;
 
-public class BasketPage extends AbstractPage{
-
-    public void openBasketPage(){
-        DriverManager.getDriver().get(BASKET_URL);
-    }
-
-    @FindBy(xpath = "//dl[@class = 'total']/dd")
-    private WebElement totalPrice;
-
-    public WebElement getTotalPrice(){
-        return totalPrice;
-    }
+public class BasketPage extends AbstractPage {
 
     @FindBy(className = "item-total")
-    private WebElement itemTotal;
+    private WebElement itemTotalElem;
 
-    public WebElement getItemTotal(){
-        return getTotalPrice();
-    }
+    @FindBy(xpath = "//dl[@class = 'total']/dd")
+    private WebElement totalPriceElem;
 
     @FindBy(xpath = "//div[@class = 'checkout-btns-wrap']/a[@href = '/payment/guest' and text() = 'Checkout']")
     private WebElement checkoutBtn;
 
-    public WebElement getCheckoutBtn(){
+    public void openBasketPage() {
+        DriverManager.getDriver().get(BASKET_URL);
+    }
+
+    public WebElement getItemTotalElem() {
+        return itemTotalElem;
+    }
+
+    public String getItemTotal() {
+        return itemTotalElem.getText();
+    }
+
+    public WebElement getTotalPriceElem() {
+        return totalPriceElem;
+    }
+
+    public String getTotalPrice() {
+        return totalPriceElem.getText();
+    }
+
+    public WebElement getCheckoutBtn() {
         return checkoutBtn;
     }
 
