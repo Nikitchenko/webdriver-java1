@@ -27,4 +27,16 @@ public class BasketPage extends AbstractPage{
         return getTotalPrice();
     }
 
+    @FindBy(xpath = "//div[@class = 'checkout-btns-wrap']/a[@href = '/payment/guest' and text() = 'Checkout']")
+    private WebElement checkoutBtn;
+
+    public WebElement getCheckoutBtn(){
+        return checkoutBtn;
+    }
+
+    public CheckoutPage checkoutBtnClick() {
+        checkoutBtn.click();
+        return new CheckoutPage();
+    }
+
 }

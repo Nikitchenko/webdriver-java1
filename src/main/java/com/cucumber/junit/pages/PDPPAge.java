@@ -30,15 +30,15 @@ public class PDPPAge extends AbstractPage{
     }
 
     @FindBy(xpath = "//a[contains(text(), 'Basket / Checkout')]")
-    private WebElement basketCheckoutLink;
+    private WebElement basketCheckoutBtn;
 
     public WebElement getBasketCheckoutLink(){
-        return basketCheckoutLink;
+        return basketCheckoutBtn;
     }
 
 
     public BasketPage basketCheckoutLinkClick() {
-        basketCheckoutLink.click();
+        basketCheckoutBtn.click();
         return new BasketPage();
     }
 
