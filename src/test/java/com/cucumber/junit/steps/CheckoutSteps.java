@@ -32,11 +32,19 @@ public class CheckoutSteps {
 
     @Then("*Item added to your basket* pop-up opens")
     public void itemAddToYourBasketPopUpOpens() {
+        String mes = "Item added to your basket";
+
+        assertAll("Check the Pop Up",
+                () -> assertEquals(mes , pdpPage.getItemAddedMessageElem().getText(),
+                        "Not expected Message in the Pop up")
+        );
+
+
     }
 
     @When("the user clicks on *Basket-Checkout* button")
     public void clickOnBasketCheckoutButton() {
-        basketPage = pdpPage.basketCheckoutLinkClick();
+        basketPage = pdpPage.basketCheckoutBtnClick();
     }
 
     @Then("*Basket* page opens with correct Item Price and Total Price {string}")

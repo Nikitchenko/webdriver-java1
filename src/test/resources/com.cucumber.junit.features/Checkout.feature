@@ -7,7 +7,7 @@ Feature: Checkout
     #Given the user is on PDP of the book with ISBN "9780131872486"; notice book price
     #Given the user is on PDP of the book with ISBN "9781783982707"; notice book price
     When the user clicks on *Add to basket* button
-    Then *Item added to your basket* pop-up opens
+    #Then *Item added to your basket* pop-up opens
     And the user clicks on *Basket-Checkout* button
     And *Basket* page opens with correct Item Price and Total Price <price>
     And the user clicks on *Checkout* button
