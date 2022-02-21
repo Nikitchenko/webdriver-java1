@@ -1,12 +1,17 @@
 package com.cucumber.junit.pages;
 
 import com.cucumber.junit.driver.DriverManager;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static com.cucumber.junit.constants.Constants.PDP_URL;
 
 public class PDPPAge extends AbstractPage {
+
+    //WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), 15 );
 
     @FindBy(xpath = "//div[@class = 'price-info-wrap']//span[@class = 'sale-price']")
     private WebElement salePriceElem;
@@ -38,6 +43,7 @@ public class PDPPAge extends AbstractPage {
     }
 
     public BasketPage basketCheckoutLinkClick() {
+        wait.until(ExpectedConditions.visibilityOf(basketCheckoutBtn));
         basketCheckoutBtn.click();
         return new BasketPage();
     }

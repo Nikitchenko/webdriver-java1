@@ -17,8 +17,8 @@ public class DriverManager {
         System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_PATH);
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
         webDriverThreadLocal.set(driver);
     }
 

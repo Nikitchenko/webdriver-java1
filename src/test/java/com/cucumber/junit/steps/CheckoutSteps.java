@@ -39,13 +39,13 @@ public class CheckoutSteps {
         basketPage = pdpPage.basketCheckoutLinkClick();
     }
 
-    @Then("*Basket* page opens with correct Item Price and Total Price - same as on PDP")
-    public void basketPageWithCorrectPrices() {
+    @Then("*Basket* page opens with correct Item Price and Total Price {string}")
+    public void basketPageWithCorrectPrices(String price) {
 
         assertAll("Check the Basket",
-                () -> assertEquals(bookPricePDP, basketPage.getItemTotal(),
+                () -> assertEquals(price, basketPage.getItemTotal(),
                         "Not expected Basket Item Total."),
-                () -> assertEquals(bookPricePDP, basketPage.getTotalPrice(),
+                () -> assertEquals(price, basketPage.getTotalPrice(),
                         "Not expected Basket Total.")
         );
     }
@@ -55,15 +55,15 @@ public class CheckoutSteps {
         checkoutPage = basketPage.checkoutBtnClick();
     }
 
-    @Then("*Checkout* page opens with correct Item Price and Total Price - same as on PDP; VAT equals {string}")
-    public void checkoutPageWithCorrectPricesAndVAT(String vat) {
+    @Then("*Checkout* page opens with correct Item Price and Total Price {string}; VAT equals {string}")
+    public void checkoutPageWithCorrectPricesAndVAT(String price, String vat) {
 
         assertAll("Check the OrderSummary on Checkout page",
-                () -> assertEquals(bookPricePDP, checkoutPage.getCheckoutSubtotal(),
+                () -> assertEquals(price, checkoutPage.getCheckoutSubtotal(),
                         "Not expected Checkout Subtotal."),
                 () -> assertEquals(vat, checkoutPage.getCheckoutVAT(),
                         "Not expected Checkout VAT."),
-                () -> assertEquals(bookPricePDP, checkoutPage.getCheckoutTotal(),
+                () -> assertEquals(price, checkoutPage.getCheckoutTotal(),
                         "Not expected Checkout Total.")
         );
 
