@@ -16,6 +16,9 @@ public class PDPPAge extends AbstractPage {
     @FindBy(xpath = "//a[@class = 'btn btn-primary add-to-basket' and contains(text(), 'Add to basket')]")
     private WebElement addToBasketBtn;
 
+    @FindBy(className = "modal-content")
+    private WebElement modalContent;
+
     @FindBy(xpath = "//h3[@class = 'modal-title']")
     private WebElement itemAddedMessageElem;
 
@@ -26,6 +29,10 @@ public class PDPPAge extends AbstractPage {
         DriverManager.getDriver().get(PDP_URL + isbn);
     }
 
+//    public void waitForModal(){
+//        waitExplicit.until(ExpectedConditions.visibilityOf(modalContent));
+//    }
+
     public WebElement getSalePriceElem() {
         return salePriceElem;
     }
@@ -34,9 +41,8 @@ public class PDPPAge extends AbstractPage {
         return salePriceElem.getText();
     }
 
-    public WebElement getItemAddedMessageElem() {
-        waitExplicit.until(ExpectedConditions.textToBePresentInElement(itemAddedMessageElem, "Item"));
-        return itemAddedMessageElem;
+    public String getItemAddedMessage() {
+        return itemAddedMessageElem.getText();
     }
 
     public WebElement getAddToBasketBtn() {
@@ -48,7 +54,9 @@ public class PDPPAge extends AbstractPage {
     }
 
     public BasketPage basketCheckoutBtnClick() {
-        waitExplicit.until(ExpectedConditions.elementToBeClickable(basketCheckoutBtn));
+        //waitExplicit.until(ExpectedConditions.visibilityOf(modalContent));
+        //waitExplicit.until(ExpectedConditions.elementToBeClickable(basketCheckoutBtn));
+        waitExplicit.until(ExpectedConditions.visibilityOf(basketCheckoutBtn));
         basketCheckoutBtn.click();
         return new BasketPage();
     }

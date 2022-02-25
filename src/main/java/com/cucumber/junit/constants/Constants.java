@@ -13,7 +13,7 @@ public class Constants {
 
     public static final String THE_BOOK2_NAME = "Thinking in Java";
     public static final String THE_BOOK2_ISBN13 = "9780131872486";
-    public static final String THE_BOOK2_PRICE = "75,79 €";
+    public static final String THE_BOOK2_PRICE = "75,73 €";
 
     public static final String THE_BOOK3_NAME = "Programming Python";
     public static final String THE_BOOK3_ISBN13 = "9780596158101";
