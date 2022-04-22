@@ -29,7 +29,7 @@ public class CheckoutSteps {
     public void clickOnAddToBasketButtonInPDP() {
         pdpPage.getAddToBasketBtn().click();
     }
-    
+
 
     @When("the user clicks on *Basket-Checkout* button")
     public void clickOnBasketCheckoutButton() {
