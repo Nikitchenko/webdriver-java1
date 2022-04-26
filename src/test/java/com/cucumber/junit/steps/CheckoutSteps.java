@@ -34,13 +34,13 @@ public class CheckoutSteps {
         basketPage = pdpPage.basketCheckoutBtnClick();
     }
 
-    @Then("*Basket* page opens with correct Item Price and Total Price {string}")
-    public void basketPageWithCorrectPrices(String price) {
+    @Then("*Basket* page opens with correct Item Price {string} and Total Price {string}")
+    public void basketPageWithCorrectPrices(String itemPrice, String totalPrice) {
 
         assertAll("Check the Basket",
-                () -> assertEquals(price, basketPage.getItemTotal(),
+                () -> assertEquals(itemPrice, basketPage.getItemTotal(),
                         "Not expected Basket Item Total."),
-                () -> assertEquals(price, basketPage.getTotalPrice(),
+                () -> assertEquals(totalPrice, basketPage.getTotalPrice(),
                         "Not expected Basket Total.")
         );
     }
@@ -50,16 +50,17 @@ public class CheckoutSteps {
         checkoutPage = basketPage.checkoutBtnClick();
     }
 
-    @Then("*Checkout* page opens with correct Item Price and Total Price {string}; VAT equals {string}")
-    public void checkoutPageWithCorrectPricesAndVAT(String price, String vat) {
+    @Then("*Checkout* page opens with correct Item Price {string}, Total Price {string} and VAT {string}")
+    public void checkoutPageWithCorrectPricesAndVAT(String itemPrice, String totalPrice, String vat) {
 
         assertAll("Check the OrderSummary on Checkout page",
-                () -> assertEquals(price, checkoutPage.getCheckoutSubtotal(),
+                () -> assertEquals(itemPrice, checkoutPage.getCheckoutSubtotal(),
                         "Not expected Checkout Subtotal."),
+                () -> assertEquals(totalPrice, checkoutPage.getCheckoutTotal(),
+                        "Not expected Checkout Total."),
                 () -> assertEquals(vat, checkoutPage.getCheckoutVAT(),
-                        "Not expected Checkout VAT."),
-                () -> assertEquals(price, checkoutPage.getCheckoutTotal(),
-                        "Not expected Checkout Total.")
+                        "Not expected Checkout VAT.")
+
         );
 
     }
