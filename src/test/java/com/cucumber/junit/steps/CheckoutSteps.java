@@ -25,7 +25,7 @@ public class CheckoutSteps {
 
     @When("the user clicks on *Add to basket* button")
     public void clickOnAddToBasketButtonInPDP() {
-        pdpPage.getAddToBasketBtn().click();
+        pdpPage.addToBasketBtnClick();
     }
 
 

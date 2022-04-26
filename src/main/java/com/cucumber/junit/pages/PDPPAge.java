@@ -29,10 +29,6 @@ public class PDPPAge extends AbstractPage {
         DriverManager.getDriver().get(PDP_URL + isbn);
     }
 
-//    public void waitForModal(){
-//        waitExplicit.until(ExpectedConditions.visibilityOf(modalContent));
-//    }
-
     public WebElement getSalePriceElem() {
         return salePriceElem;
     }
@@ -49,13 +45,15 @@ public class PDPPAge extends AbstractPage {
         return addToBasketBtn;
     }
 
+    public void addToBasketBtnClick(){
+        addToBasketBtn.click();
+    }
+
     public WebElement getBasketCheckoutBtn() {
         return basketCheckoutBtn;
     }
 
     public BasketPage basketCheckoutBtnClick() {
-        //waitExplicit.until(ExpectedConditions.visibilityOf(modalContent));
-        //waitExplicit.until(ExpectedConditions.elementToBeClickable(basketCheckoutBtn));
         waitExplicit.until(ExpectedConditions.visibilityOf(basketCheckoutBtn));
         basketCheckoutBtn.click();
         return new BasketPage();
