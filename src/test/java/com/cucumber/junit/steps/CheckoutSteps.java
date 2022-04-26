@@ -79,7 +79,7 @@ public class CheckoutSteps {
     public void invalidEmailErrorDoesNotAppear() {
 
         assertAll("Check the Invalid Email Error",
-                () -> assertEquals("", checkoutPage.getInvalidErrorMessage(),
+                () -> assertFalse( checkoutPage.isInvalidErrorMessageDisplayed(),
                         "Email error appeared.")
         );
     }

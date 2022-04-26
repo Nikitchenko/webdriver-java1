@@ -66,7 +66,7 @@ public class CheckoutPage extends AbstractPage {
         return invalidErrorMessageElem;
     }
 
-    public String getInvalidErrorMessage() {
-        return invalidErrorMessageElem.getText();
+    public Boolean isInvalidErrorMessageDisplayed() {
+        return invalidErrorMessageElem.isDisplayed();
     }
 }
