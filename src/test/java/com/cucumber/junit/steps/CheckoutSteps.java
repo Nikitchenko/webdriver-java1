@@ -15,14 +15,12 @@ public class CheckoutSteps {
     private BasketPage basketPage;
     private CheckoutPage checkoutPage;
 
-    private String bookPricePDP;
 
 
-    @When("the user is on PDP of the book with ISBN {string}; notice book price")
+    @When("the user is on PDP of the book with ISBN {string}")
     public void openSpecificPDPOfTheBookWithISBN(String isbn) {
         pdpPage = new PDPPAge();
         pdpPage.openPDPPage(isbn);
-        bookPricePDP = pdpPage.getSalePrice();
     }
 
     @When("the user clicks on *Add to basket* button")
