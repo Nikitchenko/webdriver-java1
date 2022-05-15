@@ -19,18 +19,18 @@ public class CheckoutSteps {
     private CheckoutPage checkoutPage;
 
 
-    @When("the user is on PDP of the book with ISBN {string}")
+    @When("^the (?:user|guest) is on PDP of the book with ISBN (\\d+)$")
     public void openSpecificPDPOfTheBookWithISBN(String isbn) {
         pdpPage = new PDPPAge();
         pdpPage.openPDPPage(isbn);
     }
 
-    @When("the user clicks on *Add to basket* button")
+    @When("^the (?:user|guest) clicks on Add to basket button$")
     public void clickOnAddToBasketButtonInPDP() {
         pdpPage.addToBasketBtnClick();
     }
 
-    @When("the user clicks on *Basket-Checkout* button")
+    @When("^the (?:user|guest) clicks on Basket-Checkout button$")
     public void clickOnBasketCheckoutButton() {
         basketPage = pdpPage.basketCheckoutBtnClick();
     }
@@ -48,7 +48,7 @@ public class CheckoutSteps {
         );
     }
 
-    @When("the user clicks on *Checkout* button")
+    @When("^the (?:user|guest) clicks on Checkout button$")
     public void clickOnCheckoutButton() {
         checkoutPage = basketPage.checkoutBtnClick();
     }
@@ -68,22 +68,22 @@ public class CheckoutSteps {
         );
     }
 
-    @When("the user provides valid email address {string}")
+    @When("^the (?:user|guest) provides valid email address \"([\\w\\.]+[+\\w+]*@\\w+\\.\\w*\\.*\\w{3})\"$")
     public void userProvidesCorrectEmailAddress(String email) {
         checkoutPage.getCheckoutEmailAddressField().sendKeys(email);
     }
 
-    @When("the user clicks *Buy now* button")
+    @When("^the (?:user|guest) clicks Buy now button$")
     public void userClicksBuyNowButton() {
         checkoutPage.getBuyNowBtn().click();
     }
 
-    @Then("the *Invalid email* error does not appear")
-    public void invalidEmailErrorDoesNotAppear() {
+    @Then("^the Invalid email error( does not|) appear$")
+    public void invalidEmailErrorDoesNotAppear(String neg) {
 
         assertAll("Check the Invalid Email Error",
-                () -> assertFalse(checkoutPage.isInvalidErrorMessageDisplayed(),
-                        "Email error appeared.")
+                () -> assertEquals(checkoutPage.isInvalidErrorMessageDisplayed(), neg.isEmpty(),
+                "Email error appeared.")
         );
     }
 
