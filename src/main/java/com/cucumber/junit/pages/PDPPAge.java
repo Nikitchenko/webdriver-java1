@@ -54,7 +54,7 @@ public class PDPPAge extends AbstractPage {
     }
 
     public BasketPage basketCheckoutBtnClick() {
-        waitExplicit.until(ExpectedConditions.visibilityOf(basketCheckoutBtn));
+        waitExplicit.until(ExpectedConditions.elementToBeClickable(basketCheckoutBtn));
         basketCheckoutBtn.click();
         return new BasketPage();
     }

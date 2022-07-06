@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import javax.swing.*;
 
 import static com.cucumber.junit.constants.Constants.BOOKDEPOSITORY_URL;
+import static com.cucumber.junit.constants.Constants.PDP_URL;
 
 public class HomePage extends AbstractPage {
 
@@ -28,9 +29,21 @@ public class HomePage extends AbstractPage {
     @FindBy(xpath = "//input[@name = 'searchTerm']")
     private WebElement menuSearchInput;
 
+    @FindBy(xpath = "//button[@class= 'header-search-btn']")
+    private WebElement headerSearchBtn;
+
+
     public WebElement getMenuSearchInput(){
         return menuSearchInput;
     }
 
+    public void searchForBook(String book){
+        menuSearchInput.sendKeys(book);
+    }
+
+    public SearchPage searchBtnClick() {
+        headerSearchBtn.click();
+        return new SearchPage();
+    }
 
 }
