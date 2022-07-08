@@ -1,11 +1,10 @@
 package com.cucumber.junit.pages;
 
-
 import com.cucumber.junit.driver.DriverManager;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +13,17 @@ import static com.cucumber.junit.constants.Constants.SEARCH_URL;
 
 public class SearchPage extends AbstractPage {
 
+    @FindBy(xpath = "//a[@class = 'btn btn-sm btn-primary add-to-basket']")
+    List<WebElement> bookAddToBasketLinks;
 
-    public void openSearchPage(){
-        DriverManager.getDriver().get(SEARCH_URL);
-    }
+    @FindBy(xpath = "//div[@class = 'book-item']")
+    List<WebElement> bookItems;
+
+    @FindBy(xpath = "//meta[@itemprop = 'name']")
+    List<WebElement> metaNames;
+
+    @FindBy(xpath = "//meta[@itemprop = 'isbn']")
+    List<WebElement> metaIsbns;
 
     @FindBy(xpath = "//div[@class = 'item-info']/h3/a")
     private List<WebElement> first30SearchedResults;
@@ -33,44 +39,79 @@ public class SearchPage extends AbstractPage {
 
     @FindBy(xpath = "//select[@id = 'filterFormat']")
     private WebElement filterFormat;
+
     @FindBy(xpath = "//button[contains(text(),'Refine results')]")
     private WebElement btnRefineResults;
 
-    public List<String> getListOfFirst30SearchedResults(){
+    @FindBy(xpath = "//a[contains(text(), 'Basket / Checkout')]")
+    private WebElement basketCheckoutBtn;
+
+    public void openSearchPage() {
+        DriverManager.getDriver().get(SEARCH_URL);
+    }
+
+    public List<String> getListOfFirst30SearchedResults() {
+        waitExplicit.until(ExpectedConditions.visibilityOfAllElements(first30SearchedResults));
+        waitExplicit.until(ExpectedConditions.visibilityOfAllElements(bookAddToBasketLinks));
+        waitExplicit.until(ExpectedConditions.elementToBeClickable(btnRefineResults));
         List<String> namesOfFirst30SearchedBooks = new ArrayList<>();
 
-        for (WebElement element: first30SearchedResults) {
+        for (WebElement element : first30SearchedResults) {
             namesOfFirst30SearchedBooks.add(element.getText());
             //System.out.println(element.getText());
         }
         return namesOfFirst30SearchedBooks;
     }
 
-    public void selectByPrice(String price){
+    public void selectByPrice(String price) {
+        waitExplicit.until(ExpectedConditions.elementToBeClickable(filterPrice));
         Select selectPrice = new Select(filterPrice);
         selectPrice.selectByVisibleText(price);
     }
-    public void selectByAvailability(String availability){
+
+    public void selectByAvailability(String availability) {
+        waitExplicit.until(ExpectedConditions.elementToBeClickable(filterAvailability));
         Select selectAvailability = new Select(filterAvailability);
         selectAvailability.selectByVisibleText(availability);
     }
-    public void selectByLang(String lang){
+
+    public void selectByLang(String lang) {
+        waitExplicit.until(ExpectedConditions.elementToBeClickable(filterLang));
         Select selectLang = new Select(filterLang);
         selectLang.selectByVisibleText(lang);
     }
-    public void selectByFormat(String format){
-        Select selectFormat= new Select(filterFormat);
+
+    public void selectByFormat(String format) {
+        waitExplicit.until(ExpectedConditions.elementToBeClickable(filterFormat));
+        Select selectFormat = new Select(filterFormat);
         selectFormat.selectByVisibleText(format);
     }
-    public void refineSearchResults(){
+
+    public void refineSearchResults() {
+        waitExplicit.until(ExpectedConditions.elementToBeClickable(btnRefineResults));
         btnRefineResults.click();
     }
 
-    public void printReceived(String string){
-        System.out.println(string);
+    public void bookAddToBasket(String bookName) {
+
+        for (int i = 0; i < metaNames.size(); i++) {
+
+            if (metaNames.get(i).getAttribute("content").equals(bookName)) {
+                System.out.println(metaNames.get(i).getAttribute("content"));
+                System.out.println(metaIsbns.get(i).getAttribute("content"));
+                bookAddToBasketLinks.get(i).click();
+
+            }
+        }
     }
 
+    public void basketCheckout() {
+        waitExplicit.until(ExpectedConditions.elementToBeClickable(basketCheckoutBtn));
+        basketCheckoutBtn.click();
+    }
 
-
+    public BasketPage basketCheckoutBtnClick() {
+        return new BasketPage();
+    }
 
 }

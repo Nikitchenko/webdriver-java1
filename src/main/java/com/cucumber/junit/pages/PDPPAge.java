@@ -45,7 +45,7 @@ public class PDPPAge extends AbstractPage {
         return addToBasketBtn;
     }
 
-    public void addToBasketBtnClick(){
+    public void addToBasketBtnClick() {
         addToBasketBtn.click();
     }
 
