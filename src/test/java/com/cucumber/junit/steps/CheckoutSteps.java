@@ -243,10 +243,10 @@ public class CheckoutSteps {
     public void iEnterMyCardDetails(DataTable table) throws InterruptedException {
         Map<String, String> creditCardValues = table.asMap(String.class, String.class);
 
-
+        checkoutPage.provideCreditCardNumber(creditCardValues.get("cardNumber"));
+        checkoutPage.provideExpirationDate(creditCardValues.get("Expiry Month") + creditCardValues.get("Expiry Year"));
+        checkoutPage.provideCVV(creditCardValues.get("Cvv"));
         Thread.sleep(1000);
-        //checkoutPage.provideCreditCardNumber(creditCardValues.get("cardNumber"));
-        //Thread.sleep(1000);
 
     }
 }

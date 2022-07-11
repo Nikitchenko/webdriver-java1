@@ -35,31 +35,46 @@ public class CheckoutPage extends AbstractPage {
     private WebElement invalidErrorMessageElem;
 
     @FindBy(xpath = "//input[@id = 'delivery-fullName']")
-    WebElement fullNameField;
+    private WebElement fullNameField;
 
     @FindBy(xpath = "//select[@id = 'delivery-CountryDropdown']")
     private WebElement deliveryCountryDropdown;
 
     @FindBy(xpath = "//button[@name = 'manualEntryButton']")
-    WebElement manualEntryAddressButton;
+    private WebElement manualEntryAddressButton;
 
     @FindBy(xpath = "//input[@name = 'delivery-addressLine1']")
-    WebElement deliveryAddressLine1Input;
+    private WebElement deliveryAddressLine1Input;
 
     @FindBy(xpath = "//input[@name = 'delivery-addressLine2']")
-    WebElement deliveryAddressLine2Input;
+    private WebElement deliveryAddressLine2Input;
 
     @FindBy(xpath = "//input[@name = 'delivery-city']")
-    WebElement deliveryCityInput;
+    private WebElement deliveryCityInput;
 
     @FindBy(xpath = "//input[@name = 'delivery-county']")
-    WebElement deliveryCountyInput;
+    private WebElement deliveryCountyInput;
 
     @FindBy(xpath = "//input[@name = 'delivery-postCode']")
-    WebElement deliveryPostcodeInput;
+    private WebElement deliveryPostcodeInput;
 
     @FindBy(xpath = "//input[@id = 'credit-card-number']")
-    WebElement creditCardNumberInput;
+    private WebElement creditCardNumberInput;
+
+    @FindBy(xpath = "//iframe[@id = 'braintree-hosted-field-number']")
+    private WebElement creditCardNumberFrame;
+
+    @FindBy(xpath = "//input[@id = 'expiration']")
+    private WebElement creditCardExpirationDateInput;
+
+    @FindBy(xpath = "//iframe[@id = 'braintree-hosted-field-expirationDate']")
+    private WebElement creditCardExpirationFrame;
+
+    @FindBy(xpath = "//input[@id = 'cvv']")
+    private WebElement creditCardCVVInput;
+
+    @FindBy(xpath = "//iframe[@id = 'braintree-hosted-field-cvv']")
+    private WebElement creditCardCVVFrame;
 
     public void openCheckoutPage() {
         DriverManager.getDriver().get(CHECKOUT_URL);
@@ -97,59 +112,73 @@ public class CheckoutPage extends AbstractPage {
         return checkoutEmailAddressField;
     }
 
-    public void provideCheckoutEmail(String checkoutEmail){
+    public void provideCheckoutEmail(String checkoutEmail) {
         checkoutEmailAddressField.sendKeys(checkoutEmail);
     }
 
-    public void provideCheckoutPhone(String checkoutPhone){
+    public void provideCheckoutPhone(String checkoutPhone) {
         checkoutDeliveryPhoneField.sendKeys(checkoutPhone);
     }
 
-    public void provideFullName(String fullName){
+    public void provideFullName(String fullName) {
         fullNameField.sendKeys(fullName);
     }
 
-    public void setDeliveryCountry (String deliveryCountry){
+    public void setDeliveryCountry(String deliveryCountry) {
         waitExplicit.until(ExpectedConditions.elementToBeClickable(deliveryCountryDropdown));
         Select selectCountry = new Select(deliveryCountryDropdown);
         selectCountry.selectByVisibleText(deliveryCountry);
-
     }
 
-    public void manualEntryAddressButtonClick(){
+    public void manualEntryAddressButtonClick() {
         waitExplicit.until(ExpectedConditions.elementToBeClickable(manualEntryAddressButton));
         manualEntryAddressButton.click();
     }
 
-    public void provideDeliveryAddressLine1 (String deliveryAddressLine1){
+    public void provideDeliveryAddressLine1(String deliveryAddressLine1) {
         deliveryAddressLine1Input.sendKeys(deliveryAddressLine1);
     }
 
-    public void provideDeliveryAddressLine2 (String deliveryAddressLine2){
+    public void provideDeliveryAddressLine2(String deliveryAddressLine2) {
         deliveryAddressLine2Input.sendKeys(deliveryAddressLine2);
     }
 
-    public void provideDeliveryCity (String deliveryCity){
+    public void provideDeliveryCity(String deliveryCity) {
         deliveryCityInput.sendKeys(deliveryCity);
     }
 
-    public void provideDeliveryCounty (String deliveryCounty){
+    public void provideDeliveryCounty(String deliveryCounty) {
         deliveryCountyInput.sendKeys(deliveryCounty);
     }
 
-    public void provideDeliveryPostcode (String deliveryPostcode){
+    public void provideDeliveryPostcode(String deliveryPostcode) {
         deliveryPostcodeInput.sendKeys(deliveryPostcode);
     }
 
-    public void provideCreditCardNumber (String creditCardNumber){
+    public void provideCreditCardNumber(String creditCardNumber) {
+        DriverManager.getDriver().switchTo().frame(creditCardNumberFrame);
         creditCardNumberInput.sendKeys(creditCardNumber);
+        DriverManager.getDriver().switchTo().defaultContent();
     }
+
+    public void provideExpirationDate(String expirationDate) {
+        DriverManager.getDriver().switchTo().frame(creditCardExpirationFrame);
+        creditCardExpirationDateInput.sendKeys(expirationDate);
+        DriverManager.getDriver().switchTo().defaultContent();
+    }
+
+    public void provideCVV(String cvv) {
+        DriverManager.getDriver().switchTo().frame(creditCardCVVFrame);
+        creditCardCVVInput.sendKeys(cvv);
+        DriverManager.getDriver().switchTo().defaultContent();
+    }
+
 
     public WebElement getBuyNowBtn() {
         return buyNowBtn;
     }
 
-    public void buyNowBtnClick(){
+    public void buyNowBtnClick() {
         buyNowBtn.click();
     }
 

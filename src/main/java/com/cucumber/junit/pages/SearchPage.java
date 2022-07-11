@@ -14,16 +14,16 @@ import static com.cucumber.junit.constants.Constants.SEARCH_URL;
 public class SearchPage extends AbstractPage {
 
     @FindBy(xpath = "//a[@class = 'btn btn-sm btn-primary add-to-basket']")
-    List<WebElement> bookAddToBasketLinks;
+    private List<WebElement> bookAddToBasketLinks;
 
     @FindBy(xpath = "//div[@class = 'book-item']")
-    List<WebElement> bookItems;
+    private List<WebElement> bookItems;
 
     @FindBy(xpath = "//meta[@itemprop = 'name']")
-    List<WebElement> metaNames;
+    private List<WebElement> metaNames;
 
     @FindBy(xpath = "//meta[@itemprop = 'isbn']")
-    List<WebElement> metaIsbns;
+    private List<WebElement> metaIsbns;
 
     @FindBy(xpath = "//div[@class = 'item-info']/h3/a")
     private List<WebElement> first30SearchedResults;
@@ -97,8 +97,8 @@ public class SearchPage extends AbstractPage {
         for (int i = 0; i < metaNames.size(); i++) {
 
             if (metaNames.get(i).getAttribute("content").equals(bookName)) {
-                System.out.println(metaNames.get(i).getAttribute("content"));
-                System.out.println(metaIsbns.get(i).getAttribute("content"));
+                //System.out.println(metaNames.get(i).getAttribute("content"));
+                //System.out.println(metaIsbns.get(i).getAttribute("content"));
                 bookAddToBasketLinks.get(i).click();
 
             }
