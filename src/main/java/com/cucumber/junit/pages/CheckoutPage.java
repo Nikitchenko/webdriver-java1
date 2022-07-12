@@ -32,10 +32,13 @@ public class CheckoutPage extends AbstractPage {
     private WebElement buyNowBtn;
 
     @FindBy(xpath = "//input[@name='emailAddress']/following-sibling::div[@class = 'error-block']")
-    private WebElement invalidErrorMessageElem;
+    private WebElement invalidEmailErrorMessageElem;
 
     @FindBy(xpath = "//input[@id = 'delivery-fullName']")
     private WebElement fullNameField;
+
+    @FindBy(xpath = "//input[@id='delivery-fullName']/following-sibling::div[@class = 'error-block']")
+    private WebElement invalidDeliveryFullNameErrorElem;
 
     @FindBy(xpath = "//select[@id = 'delivery-CountryDropdown']")
     private WebElement deliveryCountryDropdown;
@@ -46,17 +49,32 @@ public class CheckoutPage extends AbstractPage {
     @FindBy(xpath = "//input[@name = 'delivery-addressLine1']")
     private WebElement deliveryAddressLine1Input;
 
+    @FindBy(xpath = "//input[@id='delivery-addressLine1']/following-sibling::div[@class = 'error-block']")
+    private WebElement invalidDeliveryAddressLine1ErrorElem;
+
     @FindBy(xpath = "//input[@name = 'delivery-addressLine2']")
     private WebElement deliveryAddressLine2Input;
+
+    @FindBy(xpath = "//input[@id='delivery-addressLine2']/following-sibling::div[@class = 'error-block']")
+    private WebElement invalidDeliveryAddressLine2ErrorElem;
 
     @FindBy(xpath = "//input[@name = 'delivery-city']")
     private WebElement deliveryCityInput;
 
+    @FindBy(xpath = "//input[@id='delivery-city']/following-sibling::div[@class = 'error-block']")
+    private WebElement invalidDeliveryCityErrorElem;
+
     @FindBy(xpath = "//input[@name = 'delivery-county']")
     private WebElement deliveryCountyInput;
 
+    @FindBy(xpath = "//input[@id='delivery-county']/following-sibling::div[@class = 'error-block']")
+    private WebElement invalidDeliveryCountyErrorElem;
+
     @FindBy(xpath = "//input[@name = 'delivery-postCode']")
     private WebElement deliveryPostcodeInput;
+
+    @FindBy(xpath = "//input[@id='delivery-postCode']/following-sibling::div[@class = 'error-block']")
+    private WebElement invalidDeliveryPostcodeErrorElem;
 
     @FindBy(xpath = "//input[@id = 'credit-card-number']")
     private WebElement creditCardNumberInput;
@@ -75,6 +93,8 @@ public class CheckoutPage extends AbstractPage {
 
     @FindBy(xpath = "//iframe[@id = 'braintree-hosted-field-cvv']")
     private WebElement creditCardCVVFrame;
+
+
 
     public void openCheckoutPage() {
         DriverManager.getDriver().get(CHECKOUT_URL);
@@ -183,10 +203,62 @@ public class CheckoutPage extends AbstractPage {
     }
 
     public WebElement getInvalidErrorMessageElem() {
-        return invalidErrorMessageElem;
+        return invalidEmailErrorMessageElem;
     }
 
-    public Boolean isInvalidErrorMessageDisplayed() {
-        return invalidErrorMessageElem.isDisplayed();
+
+
+    public Boolean isInvalidEmailErrorMessageDisplayed() {
+        return invalidEmailErrorMessageElem.isDisplayed();
     }
+
+    public String invalidEmailErrorMessage(){
+        System.out.println(invalidEmailErrorMessageElem.getText());
+        return invalidEmailErrorMessageElem.getText();
+    }
+
+    public Boolean isInvalidDeliveryFullNameMessageDisplayed() {
+        return invalidDeliveryFullNameErrorElem.isDisplayed();
+    }
+
+    public String invalidFullNameErrorMessage(){
+        System.out.println(invalidDeliveryFullNameErrorElem.getText());
+        return invalidDeliveryFullNameErrorElem.getText();
+    }
+
+    public Boolean isInvalidDeliveryAddressLine1MessageDisplayed() {
+        return invalidDeliveryAddressLine1ErrorElem.isDisplayed();
+    }
+
+    public String invalidAddressLine1ErrorMessage(){
+        System.out.println(invalidDeliveryAddressLine1ErrorElem.getText());
+        return invalidDeliveryAddressLine1ErrorElem.getText();
+    }
+
+    public Boolean isInvalidDeliveryAddressLine2MessageDisplayed() {
+        return invalidDeliveryAddressLine2ErrorElem.isDisplayed();
+    }
+
+    public Boolean isInvalidDeliveryCityMessageDisplayed() {
+        return invalidDeliveryCityErrorElem.isDisplayed();
+    }
+
+    public String invalidCityErrorMessage(){
+        System.out.println(invalidDeliveryCityErrorElem.getText());
+        return invalidDeliveryCityErrorElem.getText();
+    }
+
+    public Boolean isInvalidDeliveryCountyMessageDisplayed() {
+        return invalidDeliveryCountyErrorElem.isDisplayed();
+    }
+
+    public Boolean isInvalidDeliveryPostcodeMessageDisplayed() {
+        return invalidDeliveryPostcodeErrorElem.isDisplayed();
+    }
+
+    public String invalidPostcodeErrorMessage(){
+        System.out.println(invalidDeliveryPostcodeErrorElem.getText());
+        return invalidDeliveryPostcodeErrorElem.getText();
+    }
+
 }

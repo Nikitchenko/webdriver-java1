@@ -50,22 +50,31 @@ Feature: Checkout
       | Delivery cost | Total   |
       | FREE          | 82,23 € |
     And I click 'Checkout' button on 'Basket' page
-    And I checkout as a new customer with email "test@user.com"
+    Then I am redirected to the "Checkout" page
+    When I click 'Buy now' button
+    Then the following validation error messages are displayed on 'Delivery Address' form:
+      | Form field name | validation error message                              |
+      | Email address   | Please enter your Email address                       |
+      | Full name       | Please enter your Full name                           |
+      | Address line 1  | Please enter your Address line 1                      |
+      | Town/City       | Please enter your Town/City                           |
+      | Postcode/ZIP    | Please enter your postcode/ZIP or write 'No Postcode' |
+    And the following validation error messages are displayed on 'Payment' form:
+      | Please enter your card number, Please enter your card's expiration date, Please enter your CVV |
     And Checkout order summary is as following:
       | Sub-total | Delivery | VAT    | Total   |
       | 82,23 €   | FREE     | 0,00 € | 82,23 € |
+    And I checkout as a new customer with email "test@user.com"
     And I fill delivery address information manually:
       | Full name | Delivery country | Address line 1   | Address line 2   | Town/City | County/State | Postcode |
-      | John      | Poland           | Random address 1 | Random address 2 | Kyiv      | Random State | 111111   |
-    And 'Payment' section is disabled for editing
-    When I press 'Continue to payment' button on checkout
-    And 'Delivery Address' and 'Billing Address' sections are disabled for editing
+      | John      | Poland           | Random address 1 | Random address 2 | Kyiv      | Random State | 12345    |
+    Then there is no validation error messages displayed on 'Delivery Address' form
     And I enter my card details
       | Card Type    | Visa             |
       | Name On Card | RandomName       |
       | cardNumber   | 4111111111111111 |
       | Expiry Year  | 2022             |
-      | Expiry Month | 03               |
+      | Expiry Month | 11               |
       | Cvv          | 123              |
 
 

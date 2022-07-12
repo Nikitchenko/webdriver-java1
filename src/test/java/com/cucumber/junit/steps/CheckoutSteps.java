@@ -85,7 +85,7 @@ public class CheckoutSteps {
     public void invalidEmailErrorDoesNotAppear(String neg) {
 
         assertAll("Check the Invalid Email Error",
-                () -> assertEquals(checkoutPage.isInvalidErrorMessageDisplayed(), neg.isEmpty(),
+                () -> assertEquals(checkoutPage.isInvalidEmailErrorMessageDisplayed(), neg.isEmpty(),
                         "Email error appeared.")
         );
     }
@@ -96,7 +96,7 @@ public class CheckoutSteps {
     }
 
     @And("I open the {string}")
-    public void iOpenThe(String arg0) {
+    public void iOpenThe(String page) {
         homePage = new HomePage();
         homePage.openBookdepositoryWebsite();
     }
@@ -107,7 +107,7 @@ public class CheckoutSteps {
     }
 
     @And("I am redirected to a {string}")
-    public void iAmRedirectedToA(String arg0) throws InterruptedException {
+    public void iAmRedirectedToA(String page) throws InterruptedException {
         Thread.sleep(1000);
         searchPage = homePage.searchBtnClick();
         //Thread.sleep(1000);
@@ -120,10 +120,10 @@ public class CheckoutSteps {
         List<String> searchedBooks = searchPage.getListOfFirst30SearchedResults();
 
         assertAll("Check the Search Result",
-                () -> assertTrue(searchedBooks.contains(expectedBooks.get(0)), "Search result does not contain 'Thinking in Java'."),
-                () -> assertTrue(searchedBooks.contains(expectedBooks.get(1)), "Search result does not contain 'Thinking in Java Part I'."),
-                () -> assertTrue(searchedBooks.contains(expectedBooks.get(2)), "Search result does not contain 'Core Java Professional'.")
-                //() -> assertTrue(searchedBooks.contains(expectedBooks), "Search result does not contain one of expected values.")
+                () -> assertTrue(searchedBooks.contains(expectedBooks.get(0)), "Search result does not contain " + expectedBooks.get(0)+"."),
+                () -> assertTrue(searchedBooks.contains(expectedBooks.get(1)), "Search result does not contain " + expectedBooks.get(1)+"."),
+                () -> assertTrue(searchedBooks.contains(expectedBooks.get(2)), "Search result does not contain " + expectedBooks.get(2)+".")
+
         );
     }
 
@@ -145,7 +145,7 @@ public class CheckoutSteps {
 
         assertAll("Check the Search Result",
                 () -> assertArrayEquals(new List[]{expectedBooks}, new List[]{searchedBooks},
-                        "There is a difference between expected and actual Search Results")
+                        "There is a difference between Expected and Actual Search Results")
         );
     }
 
@@ -161,6 +161,7 @@ public class CheckoutSteps {
 
     @And("I am redirected to a Basket page")
     public void iAmRedirectedToABasketPage() {
+        // to do better reuse existed step!
         basketPage = searchPage.basketCheckoutBtnClick();
     }
 
@@ -181,14 +182,58 @@ public class CheckoutSteps {
         basketPage.checkoutBtnClick();
     }
 
-    @And("^I checkout as a new customer with email \"([\\w\\.]+[+\\w+]*@\\w+\\.\\w*\\.*\\w{3})\"$")
-    public void iCheckoutAsANewCustomerWithEmail(String email) {
-        checkoutPage = basketPage.checkoutPageOpened();
-        checkoutPage.provideCheckoutEmail(email);
+    @Then("I am redirected to the {string} page")
+    public void iAmRedirectedToThePage(String page) {
 
-        //test thing
-        checkoutPage.provideCheckoutPhone("7700900077");
+        // to do better reuse existed step!
+        checkoutPage = basketPage.checkoutPageOpened();
     }
+
+    @When("^I click 'Buy now' button$")
+    public void iClickBuyNowButton() throws InterruptedException {
+
+        checkoutPage.provideCheckoutEmail("test@user.cmo");
+
+        checkoutPage.buyNowBtnClick();
+
+        Thread.sleep(2000);
+
+    }
+
+    @Then("^the following validation error messages are displayed on 'Delivery Address' form:$")
+    public void theFollowingValidationErrorMessagesAreDisplayedOnDeliveryAddressForm(DataTable table) {
+
+        Map<String, String> validationErrorMessages = table.asMap(String.class, String.class);
+
+
+        assertAll("Check the Validation Error Messages",
+                //() -> assertTrue(checkoutPage.isInvalidEmailErrorMessageDisplayed(), "Validation Email Error message is not displayed."),
+                () -> assertEquals(validationErrorMessages.get("Email address"), checkoutPage.invalidEmailErrorMessage() ,
+                        "Validation Email Error message differs from the Expected."),
+                () -> assertTrue(checkoutPage.isInvalidDeliveryFullNameMessageDisplayed(), "Validation Full Name Error message is not displayed."),
+                () -> assertEquals(validationErrorMessages.get("Full name"), checkoutPage.invalidFullNameErrorMessage() ,
+                        "Validation Full Name Error message differs from the Expected."),
+                () -> assertTrue(checkoutPage.isInvalidDeliveryAddressLine1MessageDisplayed(), "Validation Address Line 1 Error message is not displayed."),
+                () -> assertEquals(validationErrorMessages.get("Address line 1"), checkoutPage.invalidAddressLine1ErrorMessage() ,
+                        "Validation Address Line 1 Error message differs from the Expected."),
+                () -> assertTrue(checkoutPage.isInvalidDeliveryCityMessageDisplayed(), "Validation Town/City Error message is not displayed."),
+                () -> assertEquals(validationErrorMessages.get("Town/City"), checkoutPage.invalidCityErrorMessage() ,
+                        "Validation Town/City Error message differs from the Expected."),
+                () -> assertTrue(checkoutPage.isInvalidDeliveryPostcodeMessageDisplayed(), "Validation Postcode Error message is not displayed."),
+                () -> assertEquals(validationErrorMessages.get("Postcode/ZIP"), checkoutPage.invalidPostcodeErrorMessage() ,
+                        "Validation Postcode/ZIP Error message differs from the Expected.")
+
+                );
+
+        // qwe
+    }
+
+    @And("^the following validation error messages are displayed on 'Payment' form:$")
+    public void theFollowingValidationErrorMessagesAreDisplayedOnPaymentForm(DataTable table) {
+
+        // assd
+    }
+
 
     @And("^Checkout order summary is as following:$")
     public void checkoutOrderSummaryIsAsFollowing(DataTable table) {
@@ -203,8 +248,16 @@ public class CheckoutSteps {
                         "Not expected Checkout VAT."),
                 () -> assertEquals(OrderValues.get(0).get("Total"), checkoutPage.getCheckoutTotal(),
                         "Not expected Checkout Total.")
-
         );
+    }
+
+    @And("^I checkout as a new customer with email \"([\\w\\.]+[+\\w+]*@\\w+\\.\\w*\\.*\\w{3})\"$")
+    public void iCheckoutAsANewCustomerWithEmail(String email) {
+
+        checkoutPage.provideCheckoutEmail(email);
+
+        //test thing
+        //checkoutPage.provideCheckoutPhone("7700900077");
     }
 
     @And("^I fill delivery address information manually:$")
@@ -212,7 +265,8 @@ public class CheckoutSteps {
         List<Map<String, String>> deliveryAddressValues = table.asMaps(String.class, String.class);
         checkoutPage.provideFullName(deliveryAddressValues.get(0).get("Full name"));
         checkoutPage.setDeliveryCountry(deliveryAddressValues.get(0).get("Delivery country"));
-        checkoutPage.manualEntryAddressButtonClick();
+
+        //checkoutPage.manualEntryAddressButtonClick();
 
         checkoutPage.provideDeliveryAddressLine1(deliveryAddressValues.get(0).get("Address line 1"));
         checkoutPage.provideDeliveryAddressLine2(deliveryAddressValues.get(0).get("Address line 2"));
@@ -222,21 +276,24 @@ public class CheckoutSteps {
 
     }
 
-    @And("^'Payment' section is disabled for editing$")
-    public void paymentSectionIsDisabledForEditing() {
-        // to do
-    }
+    @Then("^there is no validation error messages displayed on 'Delivery Address' form$")
+    public void thereIsNoValidationErrorMessagesDisplayedOnDeliveryAddressForm() {
 
-    @When("^I press 'Continue to payment' button on checkout$")
-    public void iPressContinueToPaymentButtonOnCheckout() {
-        // is it correct?
-        checkoutPage.buyNowBtnClick();
+        assertAll("Check the Error messages",
+                () -> assertFalse(checkoutPage.isInvalidDeliveryFullNameMessageDisplayed(),
+                        "Invalid Delivery Full Name message displayed."),
+                () -> assertFalse(checkoutPage.isInvalidDeliveryAddressLine1MessageDisplayed(),
+                        "Invalid Delivery Address Line 1 message displayed."),
+                () -> assertFalse(checkoutPage.isInvalidDeliveryAddressLine2MessageDisplayed(),
+                        "Invalid Delivery Address Line 2 message displayed."),
+                () -> assertFalse(checkoutPage.isInvalidDeliveryCityMessageDisplayed(),
+                        "Invalid Delivery City message displayed."),
+                () -> assertFalse(checkoutPage.isInvalidDeliveryCountyMessageDisplayed(),
+                        "Invalid Delivery County message displayed."),
+                () -> assertFalse(checkoutPage.isInvalidDeliveryPostcodeMessageDisplayed(),
+                        "Invalid Delivery Postcode message displayed.")
+        );
 
-    }
-
-    @And("^'Delivery Address' and 'Billing Address' sections are disabled for editing$")
-    public void deliveryAddressAndBillingAddressSectionsAreDisabledForEditing() {
-        //to do
     }
 
     @And("^I enter my card details$")
@@ -249,4 +306,7 @@ public class CheckoutSteps {
         Thread.sleep(1000);
 
     }
+
+
+
 }
