@@ -1,6 +1,7 @@
 package com.cucumber.junit.pages;
 
 import com.cucumber.junit.driver.DriverManager;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -25,14 +26,14 @@ public class CheckoutPage extends AbstractPage {
     @FindBy(xpath = "//input[@name='emailAddress']")
     private WebElement checkoutEmailAddressField;
 
+    @FindBy(xpath = "//input[@name='emailAddress']/following-sibling::div[@class = 'error-block']")
+    private WebElement invalidEmailErrorMessageElem;
+
     @FindBy(xpath = "//input[@name='delivery-telephone']")
     private WebElement checkoutDeliveryPhoneField;
 
     @FindBy(xpath = "//button[text() = 'Buy now']")
     private WebElement buyNowBtn;
-
-    @FindBy(xpath = "//input[@name='emailAddress']/following-sibling::div[@class = 'error-block']")
-    private WebElement invalidEmailErrorMessageElem;
 
     @FindBy(xpath = "//input[@id = 'delivery-fullName']")
     private WebElement fullNameField;
@@ -94,7 +95,8 @@ public class CheckoutPage extends AbstractPage {
     @FindBy(xpath = "//iframe[@id = 'braintree-hosted-field-cvv']")
     private WebElement creditCardCVVFrame;
 
-
+    @FindBy(xpath = "//div[@class = 'buynow-error-msg']")
+    private WebElement paymentFieldsValidationErrorMsgElem;
 
     public void openCheckoutPage() {
         DriverManager.getDriver().get(CHECKOUT_URL);
@@ -173,6 +175,71 @@ public class CheckoutPage extends AbstractPage {
 
     public void provideDeliveryPostcode(String deliveryPostcode) {
         deliveryPostcodeInput.sendKeys(deliveryPostcode);
+        deliveryPostcodeInput.sendKeys(Keys.TAB);
+    }
+
+    public WebElement getBuyNowBtn() {
+        return buyNowBtn;
+    }
+
+    public void buyNowBtnClick() {
+        buyNowBtn.click();
+    }
+
+    public WebElement getInvalidErrorMessageElem() {
+        return invalidEmailErrorMessageElem;
+    }
+
+    public Boolean isInvalidEmailErrorMessageDisplayed() {
+        return invalidEmailErrorMessageElem.isDisplayed();
+    }
+
+    public String invalidEmailErrorMessage() {
+        return invalidEmailErrorMessageElem.getText();
+    }
+
+    public Boolean isInvalidDeliveryFullNameMessageDisplayed() {
+        return invalidDeliveryFullNameErrorElem.isDisplayed();
+    }
+
+    public String invalidFullNameErrorMessage() {
+        return invalidDeliveryFullNameErrorElem.getText();
+    }
+
+    public Boolean isInvalidDeliveryAddressLine1MessageDisplayed() {
+        return invalidDeliveryAddressLine1ErrorElem.isDisplayed();
+    }
+
+    public String invalidAddressLine1ErrorMessage() {
+        return invalidDeliveryAddressLine1ErrorElem.getText();
+    }
+
+    public Boolean isInvalidDeliveryAddressLine2MessageDisplayed() {
+        return invalidDeliveryAddressLine2ErrorElem.isDisplayed();
+    }
+
+    public Boolean isInvalidDeliveryCityMessageDisplayed() {
+        return invalidDeliveryCityErrorElem.isDisplayed();
+    }
+
+    public String invalidCityErrorMessage() {
+        return invalidDeliveryCityErrorElem.getText();
+    }
+
+    public Boolean isInvalidDeliveryCountyMessageDisplayed() {
+        return invalidDeliveryCountyErrorElem.isDisplayed();
+    }
+
+    public Boolean isInvalidDeliveryPostcodeMessageDisplayed() {
+        return invalidDeliveryPostcodeErrorElem.isDisplayed();
+    }
+
+    public String invalidPostcodeErrorMessage() {
+        return invalidDeliveryPostcodeErrorElem.getText();
+    }
+
+    public String paymentFieldsValidationErrorMessage() {
+        return paymentFieldsValidationErrorMsgElem.getText();
     }
 
     public void provideCreditCardNumber(String creditCardNumber) {
@@ -191,74 +258,6 @@ public class CheckoutPage extends AbstractPage {
         DriverManager.getDriver().switchTo().frame(creditCardCVVFrame);
         creditCardCVVInput.sendKeys(cvv);
         DriverManager.getDriver().switchTo().defaultContent();
-    }
-
-
-    public WebElement getBuyNowBtn() {
-        return buyNowBtn;
-    }
-
-    public void buyNowBtnClick() {
-        buyNowBtn.click();
-    }
-
-    public WebElement getInvalidErrorMessageElem() {
-        return invalidEmailErrorMessageElem;
-    }
-
-
-
-    public Boolean isInvalidEmailErrorMessageDisplayed() {
-        return invalidEmailErrorMessageElem.isDisplayed();
-    }
-
-    public String invalidEmailErrorMessage(){
-        System.out.println(invalidEmailErrorMessageElem.getText());
-        return invalidEmailErrorMessageElem.getText();
-    }
-
-    public Boolean isInvalidDeliveryFullNameMessageDisplayed() {
-        return invalidDeliveryFullNameErrorElem.isDisplayed();
-    }
-
-    public String invalidFullNameErrorMessage(){
-        System.out.println(invalidDeliveryFullNameErrorElem.getText());
-        return invalidDeliveryFullNameErrorElem.getText();
-    }
-
-    public Boolean isInvalidDeliveryAddressLine1MessageDisplayed() {
-        return invalidDeliveryAddressLine1ErrorElem.isDisplayed();
-    }
-
-    public String invalidAddressLine1ErrorMessage(){
-        System.out.println(invalidDeliveryAddressLine1ErrorElem.getText());
-        return invalidDeliveryAddressLine1ErrorElem.getText();
-    }
-
-    public Boolean isInvalidDeliveryAddressLine2MessageDisplayed() {
-        return invalidDeliveryAddressLine2ErrorElem.isDisplayed();
-    }
-
-    public Boolean isInvalidDeliveryCityMessageDisplayed() {
-        return invalidDeliveryCityErrorElem.isDisplayed();
-    }
-
-    public String invalidCityErrorMessage(){
-        System.out.println(invalidDeliveryCityErrorElem.getText());
-        return invalidDeliveryCityErrorElem.getText();
-    }
-
-    public Boolean isInvalidDeliveryCountyMessageDisplayed() {
-        return invalidDeliveryCountyErrorElem.isDisplayed();
-    }
-
-    public Boolean isInvalidDeliveryPostcodeMessageDisplayed() {
-        return invalidDeliveryPostcodeErrorElem.isDisplayed();
-    }
-
-    public String invalidPostcodeErrorMessage(){
-        System.out.println(invalidDeliveryPostcodeErrorElem.getText());
-        return invalidDeliveryPostcodeErrorElem.getText();
     }
 
 }

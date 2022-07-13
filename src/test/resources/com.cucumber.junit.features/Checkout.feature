@@ -45,10 +45,10 @@ Feature: Checkout
       | Think Data Structures                                             |
     And I click 'Add to basket' button for product with name "Thinking in Java"
     And I select 'Basket/Checkout' in basket pop-up
-    And I am redirected to a Basket page
+    And I am redirected to the "Basket page"
     And Basket order summary is as following:
       | Delivery cost | Total   |
-      | FREE          | 82,23 € |
+      | FREE          | 82,93 € |
     And I click 'Checkout' button on 'Basket' page
     Then I am redirected to the "Checkout" page
     When I click 'Buy now' button
@@ -63,7 +63,7 @@ Feature: Checkout
       | Please enter your card number, Please enter your card's expiration date, Please enter your CVV |
     And Checkout order summary is as following:
       | Sub-total | Delivery | VAT    | Total   |
-      | 82,23 €   | FREE     | 0,00 € | 82,23 € |
+      | 82,93 €   | FREE     | 0,00 € | 82,93 € |
     And I checkout as a new customer with email "test@user.com"
     And I fill delivery address information manually:
       | Full name | Delivery country | Address line 1   | Address line 2   | Town/City | County/State | Postcode |

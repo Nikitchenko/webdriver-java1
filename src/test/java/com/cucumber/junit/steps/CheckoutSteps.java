@@ -92,7 +92,6 @@ public class CheckoutSteps {
 
     @Given("I am an anonymous customer with clear cookies")
     public void iAmAnAnonymousCustomerWithClearCookies() {
-        //to do ?
     }
 
     @And("I open the {string}")
@@ -107,10 +106,8 @@ public class CheckoutSteps {
     }
 
     @And("I am redirected to a {string}")
-    public void iAmRedirectedToA(String page) throws InterruptedException {
-        Thread.sleep(1000);
+    public void iAmRedirectedToA(String page) {
         searchPage = homePage.searchBtnClick();
-        //Thread.sleep(1000);
     }
 
     @And("^Search results contain the following products$")
@@ -128,7 +125,7 @@ public class CheckoutSteps {
     }
 
     @And("^I apply the following search filters$")
-    public void iApplyTheFollowingSearchFilters(DataTable table) throws InterruptedException {
+    public void iApplyTheFollowingSearchFilters(DataTable table) {
         Map<String, String> filterValues = table.asMap(String.class, String.class);
 
         searchPage.selectByPrice(filterValues.get("Price range"));
@@ -159,9 +156,8 @@ public class CheckoutSteps {
         searchPage.basketCheckout();
     }
 
-    @And("I am redirected to a Basket page")
-    public void iAmRedirectedToABasketPage() {
-        // to do better reuse existed step!
+    @And("I am redirected to the {string}")
+    public void iAmRedirectedToTheBasketPage(String page) {
         basketPage = searchPage.basketCheckoutBtnClick();
     }
 
@@ -184,56 +180,47 @@ public class CheckoutSteps {
 
     @Then("I am redirected to the {string} page")
     public void iAmRedirectedToThePage(String page) {
-
-        // to do better reuse existed step!
         checkoutPage = basketPage.checkoutPageOpened();
     }
 
     @When("^I click 'Buy now' button$")
-    public void iClickBuyNowButton() throws InterruptedException {
-
-        checkoutPage.provideCheckoutEmail("test@user.cmo");
-
+    public void iClickBuyNowButton() {
         checkoutPage.buyNowBtnClick();
-
-        Thread.sleep(2000);
-
     }
 
     @Then("^the following validation error messages are displayed on 'Delivery Address' form:$")
     public void theFollowingValidationErrorMessagesAreDisplayedOnDeliveryAddressForm(DataTable table) {
-
         Map<String, String> validationErrorMessages = table.asMap(String.class, String.class);
-
 
         assertAll("Check the Validation Error Messages",
                 //() -> assertTrue(checkoutPage.isInvalidEmailErrorMessageDisplayed(), "Validation Email Error message is not displayed."),
                 () -> assertEquals(validationErrorMessages.get("Email address"), checkoutPage.invalidEmailErrorMessage() ,
-                        "Validation Email Error message differs from the Expected."),
-                () -> assertTrue(checkoutPage.isInvalidDeliveryFullNameMessageDisplayed(), "Validation Full Name Error message is not displayed."),
+                        "Validation Email Error message is not displayed or differs from the Expected."),
+                //() -> assertTrue(checkoutPage.isInvalidDeliveryFullNameMessageDisplayed(), "Validation Full Name Error message is not displayed."),
                 () -> assertEquals(validationErrorMessages.get("Full name"), checkoutPage.invalidFullNameErrorMessage() ,
-                        "Validation Full Name Error message differs from the Expected."),
-                () -> assertTrue(checkoutPage.isInvalidDeliveryAddressLine1MessageDisplayed(), "Validation Address Line 1 Error message is not displayed."),
+                        "Validation Full Name Error message is not displayed or differs from the Expected."),
+                //() -> assertTrue(checkoutPage.isInvalidDeliveryAddressLine1MessageDisplayed(), "Validation Address Line 1 Error message is not displayed."),
                 () -> assertEquals(validationErrorMessages.get("Address line 1"), checkoutPage.invalidAddressLine1ErrorMessage() ,
-                        "Validation Address Line 1 Error message differs from the Expected."),
-                () -> assertTrue(checkoutPage.isInvalidDeliveryCityMessageDisplayed(), "Validation Town/City Error message is not displayed."),
+                        "Validation Address Line 1 Error message is not displayed or differs from the Expected."),
+                //() -> assertTrue(checkoutPage.isInvalidDeliveryCityMessageDisplayed(), "Validation Town/City Error message is not displayed."),
                 () -> assertEquals(validationErrorMessages.get("Town/City"), checkoutPage.invalidCityErrorMessage() ,
-                        "Validation Town/City Error message differs from the Expected."),
-                () -> assertTrue(checkoutPage.isInvalidDeliveryPostcodeMessageDisplayed(), "Validation Postcode Error message is not displayed."),
+                        "Validation Town/City Error message is not displayed or differs from the Expected."),
+                //() -> assertTrue(checkoutPage.isInvalidDeliveryPostcodeMessageDisplayed(), "Validation Postcode Error message is not displayed."),
                 () -> assertEquals(validationErrorMessages.get("Postcode/ZIP"), checkoutPage.invalidPostcodeErrorMessage() ,
-                        "Validation Postcode/ZIP Error message differs from the Expected.")
-
+                        "Validation Postcode/ZIP Error message is not displayed or differs from the Expected.")
                 );
-
-        // qwe
     }
 
     @And("^the following validation error messages are displayed on 'Payment' form:$")
     public void theFollowingValidationErrorMessagesAreDisplayedOnPaymentForm(DataTable table) {
+        List<String> paymentValidationErrorMessages = table.asList(String.class);
 
-        // assd
+        assertAll("Check the Payment Fields validation error messages",
+                () -> assertEquals(paymentValidationErrorMessages.get(0).replace(", ", "\n"),
+                        checkoutPage.paymentFieldsValidationErrorMessage(),
+                        "Validation Error message for Payment fields is not displayed or differs from the Expected.")
+        );
     }
-
 
     @And("^Checkout order summary is as following:$")
     public void checkoutOrderSummaryIsAsFollowing(DataTable table) {
@@ -253,16 +240,13 @@ public class CheckoutSteps {
 
     @And("^I checkout as a new customer with email \"([\\w\\.]+[+\\w+]*@\\w+\\.\\w*\\.*\\w{3})\"$")
     public void iCheckoutAsANewCustomerWithEmail(String email) {
-
         checkoutPage.provideCheckoutEmail(email);
-
-        //test thing
-        //checkoutPage.provideCheckoutPhone("7700900077");
     }
 
     @And("^I fill delivery address information manually:$")
     public void iFillDeliveryAddressInformationManually(DataTable table) {
         List<Map<String, String>> deliveryAddressValues = table.asMaps(String.class, String.class);
+
         checkoutPage.provideFullName(deliveryAddressValues.get(0).get("Full name"));
         checkoutPage.setDeliveryCountry(deliveryAddressValues.get(0).get("Delivery country"));
 
@@ -273,7 +257,6 @@ public class CheckoutSteps {
         checkoutPage.provideDeliveryCity(deliveryAddressValues.get(0).get("Town/City"));
         checkoutPage.provideDeliveryCounty(deliveryAddressValues.get(0).get("County/State"));
         checkoutPage.provideDeliveryPostcode(deliveryAddressValues.get(0).get("Postcode"));
-
     }
 
     @Then("^there is no validation error messages displayed on 'Delivery Address' form$")
@@ -293,20 +276,15 @@ public class CheckoutSteps {
                 () -> assertFalse(checkoutPage.isInvalidDeliveryPostcodeMessageDisplayed(),
                         "Invalid Delivery Postcode message displayed.")
         );
-
     }
 
     @And("^I enter my card details$")
-    public void iEnterMyCardDetails(DataTable table) throws InterruptedException {
+    public void iEnterMyCardDetails(DataTable table) {
         Map<String, String> creditCardValues = table.asMap(String.class, String.class);
 
         checkoutPage.provideCreditCardNumber(creditCardValues.get("cardNumber"));
         checkoutPage.provideExpirationDate(creditCardValues.get("Expiry Month") + creditCardValues.get("Expiry Year"));
         checkoutPage.provideCVV(creditCardValues.get("Cvv"));
-        Thread.sleep(1000);
-
     }
-
-
 
 }
