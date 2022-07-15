@@ -58,7 +58,6 @@ public class SearchPage extends AbstractPage {
 
         for (WebElement element : first30SearchedResults) {
             namesOfFirst30SearchedBooks.add(element.getText());
-            //System.out.println(element.getText());
         }
         return namesOfFirst30SearchedBooks;
     }
@@ -97,10 +96,8 @@ public class SearchPage extends AbstractPage {
         for (int i = 0; i < metaNames.size(); i++) {
 
             if (metaNames.get(i).getAttribute("content").equals(bookName)) {
-                //System.out.println(metaNames.get(i).getAttribute("content"));
-                //System.out.println(metaIsbns.get(i).getAttribute("content"));
-                bookAddToBasketLinks.get(i).click();
 
+                bookAddToBasketLinks.get(i).click();
             }
         }
     }

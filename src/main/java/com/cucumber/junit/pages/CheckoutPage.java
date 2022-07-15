@@ -1,8 +1,11 @@
 package com.cucumber.junit.pages;
 
 import com.cucumber.junit.driver.DriverManager;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -258,6 +261,36 @@ public class CheckoutPage extends AbstractPage {
         DriverManager.getDriver().switchTo().frame(creditCardCVVFrame);
         creditCardCVVInput.sendKeys(cvv);
         DriverManager.getDriver().switchTo().defaultContent();
+    }
+
+    public void provideAddressLinesActions (String line1, String line2) {
+        Actions builder = new Actions(DriverManager.getDriver());
+        Action seriesOfActions = builder
+                .moveToElement(deliveryAddressLine1Input)
+                .click()
+                .sendKeys(line1)
+                .moveToElement(deliveryAddressLine2Input)
+                .click()
+                .sendKeys(line2)
+                .build();
+        seriesOfActions.perform();
+    }
+
+    public void providePostcodeActions(String postcode) {
+        Actions builder = new Actions(DriverManager.getDriver());
+        Action seriesOfActions = builder
+                .moveToElement(deliveryPostcodeInput)
+                .doubleClick()
+                .sendKeys(postcode)
+                .sendKeys(Keys.TAB)
+                .build();
+        seriesOfActions.perform();
+    }
+
+    public void buyNowBtnClickJS() {
+        JavascriptExecutor js = (JavascriptExecutor)DriverManager.getDriver();
+        js.executeScript("window.scrollBy(0,3000)");
+        js.executeScript("arguments[0].click();", buyNowBtn);
     }
 
 }

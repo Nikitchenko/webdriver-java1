@@ -107,7 +107,8 @@ public class CheckoutSteps {
 
     @And("I am redirected to a {string}")
     public void iAmRedirectedToA(String page) {
-        searchPage = homePage.searchBtnClick();
+
+        searchPage = homePage.searchBtnClickJS();
     }
 
     @And("^Search results contain the following products$")
@@ -185,7 +186,7 @@ public class CheckoutSteps {
 
     @When("^I click 'Buy now' button$")
     public void iClickBuyNowButton() {
-        checkoutPage.buyNowBtnClick();
+        checkoutPage.buyNowBtnClickJS();
     }
 
     @Then("^the following validation error messages are displayed on 'Delivery Address' form:$")
@@ -252,11 +253,13 @@ public class CheckoutSteps {
 
         //checkoutPage.manualEntryAddressButtonClick();
 
-        checkoutPage.provideDeliveryAddressLine1(deliveryAddressValues.get(0).get("Address line 1"));
-        checkoutPage.provideDeliveryAddressLine2(deliveryAddressValues.get(0).get("Address line 2"));
+        checkoutPage.provideAddressLinesActions(deliveryAddressValues.get(0).get("Address line 1"),
+                deliveryAddressValues.get(0).get("Address line 2"));
+
         checkoutPage.provideDeliveryCity(deliveryAddressValues.get(0).get("Town/City"));
         checkoutPage.provideDeliveryCounty(deliveryAddressValues.get(0).get("County/State"));
-        checkoutPage.provideDeliveryPostcode(deliveryAddressValues.get(0).get("Postcode"));
+
+        checkoutPage.providePostcodeActions(deliveryAddressValues.get(0).get("Postcode"));
     }
 
     @Then("^there is no validation error messages displayed on 'Delivery Address' form$")
@@ -286,5 +289,6 @@ public class CheckoutSteps {
         checkoutPage.provideExpirationDate(creditCardValues.get("Expiry Month") + creditCardValues.get("Expiry Year"));
         checkoutPage.provideCVV(creditCardValues.get("Cvv"));
     }
+
 
 }

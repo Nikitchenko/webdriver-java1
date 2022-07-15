@@ -2,8 +2,10 @@ package com.cucumber.junit.pages;
 
 
 import com.cucumber.junit.driver.DriverManager;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static com.cucumber.junit.constants.Constants.BOOKDEPOSITORY_URL;
 
@@ -28,7 +30,17 @@ public class HomePage extends AbstractPage {
     }
 
     public SearchPage searchBtnClick() {
+        waitExplicit.until(ExpectedConditions.elementToBeClickable(headerSearchBtn));
         headerSearchBtn.click();
+
+        return new SearchPage();
+    }
+
+    public SearchPage searchBtnClickJS() {
+
+        JavascriptExecutor js = (JavascriptExecutor)DriverManager.getDriver();
+        js.executeScript("arguments[0].click();", headerSearchBtn);
+
         return new SearchPage();
     }
 
