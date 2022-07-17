@@ -2,35 +2,46 @@ package com.cucumber.junit.pages;
 
 
 import com.cucumber.junit.driver.DriverManager;
-import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
-import javax.swing.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static com.cucumber.junit.constants.Constants.BOOKDEPOSITORY_URL;
 
 public class HomePage extends AbstractPage {
 
-    //private static final String BOOKDEPOSITORY_URL = "https://www.bookdepository.com/";
-    //private static final String MENU_SEARCH_XPATH = "//input[@name = 'searchTerm']";
-
-    public void openBookdepositoryWebsite(){
-        DriverManager.getDriver().get(BOOKDEPOSITORY_URL);
-    }
-
-
-
-//    public WebElement getMenuSearch(){
-//        return findElement(By.xpath(MENU_SEARCH_XPATH));
-//    }
-
     @FindBy(xpath = "//input[@name = 'searchTerm']")
     private WebElement menuSearchInput;
 
-    public WebElement getMenuSearchInput(){
+    @FindBy(xpath = "//button[@class= 'header-search-btn']")
+    private WebElement headerSearchBtn;
+
+    public void openBookdepositoryWebsite() {
+        DriverManager.getDriver().get(BOOKDEPOSITORY_URL);
+    }
+
+    public WebElement getMenuSearchInput() {
         return menuSearchInput;
     }
 
+    public void searchForBook(String book) {
+        menuSearchInput.sendKeys(book);
+    }
+
+    public SearchPage searchBtnClick() {
+        waitExplicit.until(ExpectedConditions.elementToBeClickable(headerSearchBtn));
+        headerSearchBtn.click();
+
+        return new SearchPage();
+    }
+
+    public SearchPage searchBtnClickJS() {
+
+        JavascriptExecutor js = (JavascriptExecutor)DriverManager.getDriver();
+        js.executeScript("arguments[0].click();", headerSearchBtn);
+
+        return new SearchPage();
+    }
 
 }
