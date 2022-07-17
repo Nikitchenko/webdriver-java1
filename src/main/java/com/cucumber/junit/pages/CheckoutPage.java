@@ -264,6 +264,11 @@ public class CheckoutPage extends AbstractPage {
     }
 
     public void provideAddressLinesActions (String line1, String line2) {
+
+        // this scroll down needed for geckodriver to avoid the MoveTargetOutOfBoundsException issue
+        JavascriptExecutor js = (JavascriptExecutor)DriverManager.getDriver();
+        js.executeScript("window.scrollBy(0,500)");
+
         Actions builder = new Actions(DriverManager.getDriver());
         Action seriesOfActions = builder
                 .moveToElement(deliveryAddressLine1Input)
@@ -289,7 +294,7 @@ public class CheckoutPage extends AbstractPage {
 
     public void buyNowBtnClickJS() {
         JavascriptExecutor js = (JavascriptExecutor)DriverManager.getDriver();
-        js.executeScript("window.scrollBy(0,3000)");
+        js.executeScript("window.scrollBy(0,700)");
         js.executeScript("arguments[0].click();", buyNowBtn);
     }
 
