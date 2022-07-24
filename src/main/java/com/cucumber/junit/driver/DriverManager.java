@@ -18,7 +18,7 @@ public class DriverManager {
 
     public static void setupDriver() {
 
-        WebDriver driver = null;
+        WebDriver driver;
         String browser = System.getProperty("browser");
 
         if (browser.equalsIgnoreCase("Chrome")) {
@@ -30,7 +30,7 @@ public class DriverManager {
             driver = new FirefoxDriver();
         }
         else {
-            throw new IllegalStateException("This driver is not supported: " + System.getProperty("browser"));
+            throw new IllegalStateException("This driver is not supported: " + browser);
         }
 
         driver.manage().window().maximize();
