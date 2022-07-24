@@ -34,7 +34,7 @@
                 <version>3.0.0-M7</version>
                 <configuration>
                     <systemPropertyVariables>
-                        <browser>chrome</browser>
+                        <browser>firefox</browser>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
