@@ -51,9 +51,8 @@ public class SearchPage extends AbstractPage {
     }
 
     public List<String> getListOfFirst30SearchedResults() {
+
         waitExplicit.until(ExpectedConditions.visibilityOfAllElements(first30SearchedResults));
-        waitExplicit.until(ExpectedConditions.visibilityOfAllElements(bookAddToBasketLinks));
-        waitExplicit.until(ExpectedConditions.elementToBeClickable(btnRefineResults));
         List<String> namesOfFirst30SearchedBooks = new ArrayList<>();
 
         for (WebElement element : first30SearchedResults) {

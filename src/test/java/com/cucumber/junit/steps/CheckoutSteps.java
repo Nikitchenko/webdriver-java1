@@ -112,16 +112,15 @@ public class CheckoutSteps {
     }
 
     @And("^Search results contain the following products$")
-    public void searchResultsContainTheFollowingProducts(DataTable table) {
+    public void searchResultsContainTheFollowingProducts(List<String> expectedBooks) {
 
-        List<String> expectedBooks = table.asList(String.class);
         List<String> searchedBooks = searchPage.getListOfFirst30SearchedResults();
 
         assertAll("Check the Search Result",
                 () -> assertTrue(searchedBooks.contains(expectedBooks.get(0)), "Search result does not contain " + expectedBooks.get(0)+"."),
                 () -> assertTrue(searchedBooks.contains(expectedBooks.get(1)), "Search result does not contain " + expectedBooks.get(1)+"."),
-                () -> assertTrue(searchedBooks.contains(expectedBooks.get(2)), "Search result does not contain " + expectedBooks.get(2)+".")
-
+                () -> assertTrue(searchedBooks.contains(expectedBooks.get(2)), "Search result does not contain " + expectedBooks.get(2)+"."),
+                () -> assertTrue(searchedBooks.containsAll(expectedBooks), "Some of expected books are not present in the search result.")
         );
     }
 
@@ -137,14 +136,12 @@ public class CheckoutSteps {
     }
 
     @And("^Search results contain only the following products$")
-    public void searchResultsContainOnlyTheFollowingProducts(DataTable table) {
-        List<String> expectedBooks = table.asList(String.class);
+    public void searchResultsContainOnlyTheFollowingProducts(List<String> expectedBooks) {
+
         List<String> searchedBooks = searchPage.getListOfFirst30SearchedResults();
 
-        assertAll("Check the Search Result",
-                () -> assertArrayEquals(new List[]{expectedBooks}, new List[]{searchedBooks},
-                        "There is a difference between Expected and Actual Search Results")
-        );
+        assertEquals(expectedBooks, searchedBooks,"There is a difference between Expected and Actual Search Results");
+
     }
 
     @And("I click 'Add to basket' button for product with name {string}")
@@ -194,19 +191,15 @@ public class CheckoutSteps {
         Map<String, String> validationErrorMessages = table.asMap(String.class, String.class);
 
         assertAll("Check the Validation Error Messages",
-                //() -> assertTrue(checkoutPage.isInvalidEmailErrorMessageDisplayed(), "Validation Email Error message is not displayed."),
+
                 () -> assertEquals(validationErrorMessages.get("Email address"), checkoutPage.invalidEmailErrorMessage() ,
                         "Validation Email Error message is not displayed or differs from the Expected."),
-                //() -> assertTrue(checkoutPage.isInvalidDeliveryFullNameMessageDisplayed(), "Validation Full Name Error message is not displayed."),
                 () -> assertEquals(validationErrorMessages.get("Full name"), checkoutPage.invalidFullNameErrorMessage() ,
                         "Validation Full Name Error message is not displayed or differs from the Expected."),
-                //() -> assertTrue(checkoutPage.isInvalidDeliveryAddressLine1MessageDisplayed(), "Validation Address Line 1 Error message is not displayed."),
                 () -> assertEquals(validationErrorMessages.get("Address line 1"), checkoutPage.invalidAddressLine1ErrorMessage() ,
                         "Validation Address Line 1 Error message is not displayed or differs from the Expected."),
-                //() -> assertTrue(checkoutPage.isInvalidDeliveryCityMessageDisplayed(), "Validation Town/City Error message is not displayed."),
                 () -> assertEquals(validationErrorMessages.get("Town/City"), checkoutPage.invalidCityErrorMessage() ,
                         "Validation Town/City Error message is not displayed or differs from the Expected."),
-                //() -> assertTrue(checkoutPage.isInvalidDeliveryPostcodeMessageDisplayed(), "Validation Postcode Error message is not displayed."),
                 () -> assertEquals(validationErrorMessages.get("Postcode/ZIP"), checkoutPage.invalidPostcodeErrorMessage() ,
                         "Validation Postcode/ZIP Error message is not displayed or differs from the Expected.")
                 );
@@ -216,11 +209,10 @@ public class CheckoutSteps {
     public void theFollowingValidationErrorMessagesAreDisplayedOnPaymentForm(DataTable table) {
         List<String> paymentValidationErrorMessages = table.asList(String.class);
 
-        assertAll("Check the Payment Fields validation error messages",
-                () -> assertEquals(paymentValidationErrorMessages.get(0).replace(", ", "\n"),
+        assertEquals(paymentValidationErrorMessages.get(0).replace(", ", "\n"),
                         checkoutPage.paymentFieldsValidationErrorMessage(),
-                        "Validation Error message for Payment fields is not displayed or differs from the Expected.")
-        );
+                        "Validation Error message for Payment fields is not displayed or differs from the Expected.");
+
     }
 
     @And("^Checkout order summary is as following:$")
@@ -246,6 +238,7 @@ public class CheckoutSteps {
 
     @And("^I fill delivery address information manually:$")
     public void iFillDeliveryAddressInformationManually(DataTable table) {
+
         List<Map<String, String>> deliveryAddressValues = table.asMaps(String.class, String.class);
 
         checkoutPage.provideFullName(deliveryAddressValues.get(0).get("Full name"));

@@ -48,7 +48,7 @@ Feature: Checkout
     And I am redirected to the "Basket page"
     And Basket order summary is as following:
       | Delivery cost | Total   |
-      | FREE          | 83,03 € |
+      | FREE          | 81,94 € |
     And I click 'Checkout' button on 'Basket' page
     Then I am redirected to the "Checkout" page
     When I click 'Buy now' button
@@ -63,7 +63,7 @@ Feature: Checkout
       | Please enter your card number, Please enter your card's expiration date, Please enter your CVV |
     And Checkout order summary is as following:
       | Sub-total | Delivery | VAT    | Total   |
-      | 83,03 €   | FREE     | 0,00 € | 83,03 € |
+      | 81,94 €   | FREE     | 0,00 € | 81,94 € |
     And I checkout as a new customer with email "test@user.com"
     And I fill delivery address information manually:
       | Full name | Delivery country | Address line 1   | Address line 2   | Town/City | County/State | Postcode |
