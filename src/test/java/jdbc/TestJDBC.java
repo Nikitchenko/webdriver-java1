@@ -1,5 +1,6 @@
 package jdbc;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
@@ -8,23 +9,31 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Logger;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class TestJDBC {
 
     private static final Logger LOGGER = Logger.getLogger(String.valueOf(TestJDBC.class));
+    private static Connection connectionDB;
 
-    @Test
-    public void testJDBConnectionToDBWithData() throws SQLException {
-        LOGGER.info("JDBC test started");
+    @BeforeAll
+    public static void setupConnection() {
+
+        LOGGER.info("JDBC setup connection test started");
 
         final JDBConnector jdbcDriverSetup = new JDBConnector();
         jdbcDriverSetup.dbDriverSetup();
+        connectionDB = jdbcDriverSetup.getConnectionDB();
+        assertNotNull(connectionDB, "no connection");
+    }
 
-        Connection connectionDb = jdbcDriverSetup.getConnectionDB();
-        assertNotNull(connectionDb, "no connection");
+    @Test
+    public void testJDBConnectionToDBWithDataSimple() throws SQLException {
 
-        Statement stm1 = connectionDb.createStatement();
+        LOGGER.info("JDBC simple test started");
+
+        Statement stm1 = connectionDB.createStatement();
         ResultSet resultSet1 = stm1.executeQuery("SELECT * FROM user WHERE username = 'Cardinal';");
 
         while (resultSet1.next()) {
@@ -32,7 +41,14 @@ public class TestJDBC {
             assertEquals("cardinal@uk.cmo", resultSet1.getString("email"), "Cardinal has incorrect email");
         }
 
-        Statement stm2 = connectionDb.createStatement();
+    }
+
+    @Test
+    public void testJDBConnectionToDBWithDataUseJoin() throws SQLException {
+
+        LOGGER.info("JDBC test with JOIN started");
+
+        Statement stm2 = connectionDB.createStatement();
         ResultSet resultSet2 = stm2.executeQuery(
                 "SELECT *\n" +
                         "FROM testdb.persons\n" +
@@ -45,7 +61,8 @@ public class TestJDBC {
                     resultSet2.getString("first_name"), resultSet2.getString("last_name")));
             assertEquals("Enrique", resultSet2.getString("first_name"), "Cardinal has incorrect First Name");
             assertEquals("Iglesias", resultSet2.getString("last_name"), "Cardinal has incorrect Last Name");
-
         }
+
     }
+
 }
