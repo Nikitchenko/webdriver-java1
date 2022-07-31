@@ -1,6 +1,6 @@
 package com.cucumber.junit.pages;
 
-import com.cucumber.junit.driver.DriverManager;
+import com.cucumber.junit.driver.WebDriverManager;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -21,7 +21,7 @@ public class BasketPage extends AbstractPage {
     private WebElement deliveryCost;
 
     public void openBasketPage() {
-        DriverManager.getDriver().get(BASKET_URL);
+        WebDriverManager.getDriver().get(BASKET_URL);
     }
 
     public WebElement getItemTotalElem() {

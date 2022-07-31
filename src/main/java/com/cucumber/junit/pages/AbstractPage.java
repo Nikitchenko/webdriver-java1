@@ -1,6 +1,6 @@
 package com.cucumber.junit.pages;
 
-import com.cucumber.junit.driver.DriverManager;
+import com.cucumber.junit.driver.WebDriverManager;
 import com.cucumber.junit.util.Waiter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -13,11 +13,11 @@ public abstract class AbstractPage {
     protected WebDriverWait waitExplicit = Waiter.waitExplicit();
 
     public AbstractPage(){
-        PageFactory.initElements(DriverManager.getDriver(), this);
+        PageFactory.initElements(WebDriverManager.getDriver(), this);
     }
 
     public WebElement findElement(By by){
-        return DriverManager.getDriver().findElement(by);
+        return WebDriverManager.getDriver().findElement(by);
     }
 
     public boolean isElementDisplayed(By by){
