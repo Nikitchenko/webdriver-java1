@@ -7,13 +7,13 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-public class DriverManager {
+public class WebDriverManager {
 
     private static final String CHROME_DRIVER_PATH = "src/main/resources/chromedriver.exe";
     private static final String GECKO_DRIVER_PATH = "src/main/resources/geckodriver.exe";
     private static final ThreadLocal<WebDriver> webDriverThreadLocal = new ThreadLocal<>();
 
-    private DriverManager() {
+    private WebDriverManager() {
     }
 
     public static void setupDriver() {

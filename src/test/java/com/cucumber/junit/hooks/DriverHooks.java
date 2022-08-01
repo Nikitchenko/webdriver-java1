@@ -1,6 +1,6 @@
 package com.cucumber.junit.hooks;
 
-import com.cucumber.junit.driver.DriverManager;
+import com.cucumber.junit.driver.WebDriverManager;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 
@@ -8,12 +8,12 @@ public class DriverHooks {
 
     @Before
     public void setupDriver(){
-        DriverManager.setupDriver();
+        WebDriverManager.setupDriver();
     }
 
     @After
     public void quitDriver(){
-        DriverManager.quitDriver();
+        WebDriverManager.quitDriver();
     }
 
 }

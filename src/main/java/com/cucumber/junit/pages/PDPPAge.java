@@ -1,6 +1,6 @@
 package com.cucumber.junit.pages;
 
-import com.cucumber.junit.driver.DriverManager;
+import com.cucumber.junit.driver.WebDriverManager;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -26,7 +26,7 @@ public class PDPPAge extends AbstractPage {
     private WebElement basketCheckoutBtn;
 
     public void openPDPPage(String isbn) {
-        DriverManager.getDriver().get(PDP_URL + isbn);
+        WebDriverManager.getDriver().get(PDP_URL + isbn);
     }
 
     public WebElement getSalePriceElem() {

@@ -1,6 +1,6 @@
 package com.cucumber.junit.pages;
 
-import com.cucumber.junit.driver.DriverManager;
+import com.cucumber.junit.driver.WebDriverManager;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -102,7 +102,7 @@ public class CheckoutPage extends AbstractPage {
     private WebElement paymentFieldsValidationErrorMsgElem;
 
     public void openCheckoutPage() {
-        DriverManager.getDriver().get(CHECKOUT_URL);
+        WebDriverManager.getDriver().get(CHECKOUT_URL);
     }
 
     public WebElement getCheckoutSubtotalElem() {
@@ -246,30 +246,30 @@ public class CheckoutPage extends AbstractPage {
     }
 
     public void provideCreditCardNumber(String creditCardNumber) {
-        DriverManager.getDriver().switchTo().frame(creditCardNumberFrame);
+        WebDriverManager.getDriver().switchTo().frame(creditCardNumberFrame);
         creditCardNumberInput.sendKeys(creditCardNumber);
-        DriverManager.getDriver().switchTo().defaultContent();
+        WebDriverManager.getDriver().switchTo().defaultContent();
     }
 
     public void provideExpirationDate(String expirationDate) {
-        DriverManager.getDriver().switchTo().frame(creditCardExpirationFrame);
+        WebDriverManager.getDriver().switchTo().frame(creditCardExpirationFrame);
         creditCardExpirationDateInput.sendKeys(expirationDate);
-        DriverManager.getDriver().switchTo().defaultContent();
+        WebDriverManager.getDriver().switchTo().defaultContent();
     }
 
     public void provideCVV(String cvv) {
-        DriverManager.getDriver().switchTo().frame(creditCardCVVFrame);
+        WebDriverManager.getDriver().switchTo().frame(creditCardCVVFrame);
         creditCardCVVInput.sendKeys(cvv);
-        DriverManager.getDriver().switchTo().defaultContent();
+        WebDriverManager.getDriver().switchTo().defaultContent();
     }
 
     public void provideAddressLinesActions (String line1, String line2) {
 
         // this scroll down needed for geckodriver to avoid the MoveTargetOutOfBoundsException issue
-        JavascriptExecutor js = (JavascriptExecutor)DriverManager.getDriver();
+        JavascriptExecutor js = (JavascriptExecutor) WebDriverManager.getDriver();
         js.executeScript("window.scrollBy(0,500)");
 
-        Actions builder = new Actions(DriverManager.getDriver());
+        Actions builder = new Actions(WebDriverManager.getDriver());
         Action seriesOfActions = builder
                 .moveToElement(deliveryAddressLine1Input)
                 .click()
@@ -282,7 +282,7 @@ public class CheckoutPage extends AbstractPage {
     }
 
     public void providePostcodeActions(String postcode) {
-        Actions builder = new Actions(DriverManager.getDriver());
+        Actions builder = new Actions(WebDriverManager.getDriver());
         Action seriesOfActions = builder
                 .moveToElement(deliveryPostcodeInput)
                 .doubleClick()
@@ -293,7 +293,7 @@ public class CheckoutPage extends AbstractPage {
     }
 
     public void buyNowBtnClickJS() {
-        JavascriptExecutor js = (JavascriptExecutor)DriverManager.getDriver();
+        JavascriptExecutor js = (JavascriptExecutor) WebDriverManager.getDriver();
         js.executeScript("window.scrollBy(0,700)");
         js.executeScript("arguments[0].click();", buyNowBtn);
     }

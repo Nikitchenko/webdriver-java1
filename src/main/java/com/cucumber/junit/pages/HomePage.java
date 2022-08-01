@@ -1,7 +1,7 @@
 package com.cucumber.junit.pages;
 
 
-import com.cucumber.junit.driver.DriverManager;
+import com.cucumber.junit.driver.WebDriverManager;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,7 +18,7 @@ public class HomePage extends AbstractPage {
     private WebElement headerSearchBtn;
 
     public void openBookdepositoryWebsite() {
-        DriverManager.getDriver().get(BOOKDEPOSITORY_URL);
+        WebDriverManager.getDriver().get(BOOKDEPOSITORY_URL);
     }
 
     public WebElement getMenuSearchInput() {
@@ -38,7 +38,7 @@ public class HomePage extends AbstractPage {
 
     public SearchPage searchBtnClickJS() {
 
-        JavascriptExecutor js = (JavascriptExecutor)DriverManager.getDriver();
+        JavascriptExecutor js = (JavascriptExecutor) WebDriverManager.getDriver();
         js.executeScript("arguments[0].click();", headerSearchBtn);
 
         return new SearchPage();

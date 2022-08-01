@@ -1,6 +1,6 @@
 package com.cucumber.junit.hooks;
 
-import com.cucumber.junit.driver.DriverManager;
+import com.cucumber.junit.driver.WebDriverManager;
 import io.cucumber.java.After;
 import io.cucumber.java.Scenario;
 import org.openqa.selenium.OutputType;
@@ -13,10 +13,10 @@ public class ScreenshotHook {
     @After
     public void takeScreenshot(Scenario scenario){
         if (scenario.isFailed()) {
-            scenario.log(DriverManager.getDriver().getCurrentUrl());
+            scenario.log(WebDriverManager.getDriver().getCurrentUrl());
             // log instead of write
 
-            byte[] screenshot = ((TakesScreenshot) DriverManager.getDriver()).getScreenshotAs(OutputType.BYTES);
+            byte[] screenshot = ((TakesScreenshot) WebDriverManager.getDriver()).getScreenshotAs(OutputType.BYTES);
             scenario.attach(screenshot, PNG_FILE_EXTENSION, scenario.getName());
             // attach instead of embed
         }

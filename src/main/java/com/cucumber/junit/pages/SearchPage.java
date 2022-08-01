@@ -1,6 +1,6 @@
 package com.cucumber.junit.pages;
 
-import com.cucumber.junit.driver.DriverManager;
+import com.cucumber.junit.driver.WebDriverManager;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -47,7 +47,7 @@ public class SearchPage extends AbstractPage {
     private WebElement basketCheckoutBtn;
 
     public void openSearchPage() {
-        DriverManager.getDriver().get(SEARCH_URL);
+        WebDriverManager.getDriver().get(SEARCH_URL);
     }
 
     public List<String> getListOfFirst30SearchedResults() {
