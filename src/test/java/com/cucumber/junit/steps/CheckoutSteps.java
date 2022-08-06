@@ -195,20 +195,29 @@ public class CheckoutSteps {
 
     @Then("^the following validation error messages are displayed on 'Delivery Address' form:$")
     public void theFollowingValidationErrorMessagesAreDisplayedOnDeliveryAddressForm(DataTable table) {
-        Map<String, String> validationErrorMessages = table.asMap(String.class, String.class);
+        List<Map<String, String>> validationErrorMessages = table.asMaps(String.class, String.class);
 
         assertAll("Check the Validation Error Messages",
 
-                () -> assertEquals(validationErrorMessages.get("Email address"), checkoutPage.invalidEmailErrorMessage(),
-                        "Validation Email Error message is not displayed or differs from the Expected."),
-                () -> assertEquals(validationErrorMessages.get("Full name"), checkoutPage.invalidFullNameErrorMessage(),
-                        "Validation Full Name Error message is not displayed or differs from the Expected."),
-                () -> assertEquals(validationErrorMessages.get("Address line 1"), checkoutPage.invalidAddressLine1ErrorMessage(),
-                        "Validation Address Line 1 Error message is not displayed or differs from the Expected."),
-                () -> assertEquals(validationErrorMessages.get("Town/City"), checkoutPage.invalidCityErrorMessage(),
-                        "Validation Town/City Error message is not displayed or differs from the Expected."),
-                () -> assertEquals(validationErrorMessages.get("Postcode/ZIP"), checkoutPage.invalidPostcodeErrorMessage(),
-                        "Validation Postcode/ZIP Error message is not displayed or differs from the Expected.")
+                () -> assertEquals(validationErrorMessages.get(0).get("validation error message"), checkoutPage.invalidEmailErrorMessage(),
+                        validationErrorMessages.get(0).get("Form field name")
+                                + ": Validation Error message is not displayed or differs from the Expected."),
+
+                () -> assertEquals(validationErrorMessages.get(1).get("validation error message"), checkoutPage.invalidFullNameErrorMessage(),
+                        validationErrorMessages.get(1).get("Form field name")
+                                + ": Validation Error message is not displayed or differs from the Expected."),
+
+                () -> assertEquals(validationErrorMessages.get(2).get("validation error message"), checkoutPage.invalidAddressLine1ErrorMessage(),
+                        validationErrorMessages.get(2).get("Form field name")
+                                + ": Validation Error message is not displayed or differs from the Expected."),
+
+                () -> assertEquals(validationErrorMessages.get(3).get("validation error message"), checkoutPage.invalidCityErrorMessage(),
+                        validationErrorMessages.get(3).get("Form field name")
+                                + ": Validation Error message is not displayed or differs from the Expected."),
+
+                () -> assertEquals(validationErrorMessages.get(4).get("validation error message"), checkoutPage.invalidPostcodeErrorMessage(),
+                        validationErrorMessages.get(4).get("Form field name")
+                                + ": Validation Error message is not displayed or differs from the Expected.")
         );
     }
 
