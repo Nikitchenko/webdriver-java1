@@ -3,6 +3,7 @@ package com.cucumber.junit.steps;
 import com.cucumber.junit.pages.*;
 import com.cucumber.junit.util.RegExParser;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.Transpose;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -171,13 +172,12 @@ public class CheckoutSteps {
     }
 
     @And("^Basket order summary is as following:$")
-    public void basketOrderSummaryIsAsFollowing(DataTable table) {
-        List<Map<String, String>> orderEntities = table.asMaps(String.class, String.class);
+    public void basketOrderSummaryIsAsFollowing(@Transpose Map orderEntities) {
 
         assertAll("Check the Basket",
-                () -> assertEquals(orderEntities.get(0).get("Delivery cost"), basketPage.getDeliveryCost(),
+                () -> assertEquals(orderEntities.get("Delivery cost"), basketPage.getDeliveryCost(),
                         "Not expected Delivery Cost."),
-                () -> assertEquals(orderEntities.get(0).get("Total"), basketPage.getTotalPrice(),
+                () -> assertEquals(orderEntities.get("Total"), basketPage.getTotalPrice(),
                         "Not expected Basket Total.")
         );
     }
@@ -232,17 +232,16 @@ public class CheckoutSteps {
     }
 
     @And("^Checkout order summary is as following:$")
-    public void checkoutOrderSummaryIsAsFollowing(DataTable table) {
-        List<Map<String, String>> OrderValues = table.asMaps(String.class, String.class);
+    public void checkoutOrderSummaryIsAsFollowing(@Transpose Map orderValues) {
 
         assertAll("Check the OrderSummary on Checkout page",
-                () -> assertEquals(OrderValues.get(0).get("Sub-total"), checkoutPage.getCheckoutSubtotal(),
+                () -> assertEquals(orderValues.get("Sub-total"), checkoutPage.getCheckoutSubtotal(),
                         "Not expected Checkout Subtotal."),
-                () -> assertEquals(OrderValues.get(0).get("Delivery"), checkoutPage.getCheckoutDelivery(),
+                () -> assertEquals(orderValues.get("Delivery"), checkoutPage.getCheckoutDelivery(),
                         "Not expected Checkout SDelivery."),
-                () -> assertEquals(OrderValues.get(0).get("VAT"), checkoutPage.getCheckoutVAT(),
+                () -> assertEquals(orderValues.get("VAT"), checkoutPage.getCheckoutVAT(),
                         "Not expected Checkout VAT."),
-                () -> assertEquals(OrderValues.get(0).get("Total"), checkoutPage.getCheckoutTotal(),
+                () -> assertEquals(orderValues.get("Total"), checkoutPage.getCheckoutTotal(),
                         "Not expected Checkout Total.")
         );
     }
@@ -253,22 +252,20 @@ public class CheckoutSteps {
     }
 
     @And("^I fill delivery address information manually:$")
-    public void iFillDeliveryAddressInformationManually(DataTable table) {
+    public void iFillDeliveryAddressInformationManually(@Transpose Map deliveryAddressValues) {
 
-        List<Map<String, String>> deliveryAddressValues = table.asMaps(String.class, String.class);
-
-        checkoutPage.provideFullName(deliveryAddressValues.get(0).get("Full name"));
-        checkoutPage.setDeliveryCountry(deliveryAddressValues.get(0).get("Delivery country"));
+        checkoutPage.provideFullName((String) deliveryAddressValues.get("Full name"));
+        checkoutPage.setDeliveryCountry((String) deliveryAddressValues.get("Delivery country"));
 
         //checkoutPage.manualEntryAddressButtonClick();
 
-        checkoutPage.provideAddressLinesActions(deliveryAddressValues.get(0).get("Address line 1"),
-                deliveryAddressValues.get(0).get("Address line 2"));
+        checkoutPage.provideAddressLinesActions((String) deliveryAddressValues.get("Address line 1"),
+                (String) deliveryAddressValues.get("Address line 2"));
 
-        checkoutPage.provideDeliveryCity(deliveryAddressValues.get(0).get("Town/City"));
-        checkoutPage.provideDeliveryCounty(deliveryAddressValues.get(0).get("County/State"));
+        checkoutPage.provideDeliveryCity((String) deliveryAddressValues.get("Town/City"));
+        checkoutPage.provideDeliveryCounty((String) deliveryAddressValues.get("County/State"));
 
-        checkoutPage.providePostcodeActions(deliveryAddressValues.get(0).get("Postcode"));
+        checkoutPage.providePostcodeActions((String) deliveryAddressValues.get("Postcode"));
     }
 
     @Then("^there is no validation error messages displayed on 'Delivery Address' form$")
