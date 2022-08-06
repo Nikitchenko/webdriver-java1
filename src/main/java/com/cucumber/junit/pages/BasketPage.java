@@ -17,6 +17,9 @@ public class BasketPage extends AbstractPage {
     @FindBy(xpath = "//div[@class = 'checkout-btns-wrap']/a[@href = '/payment/guest' and text() = 'Checkout']")
     private WebElement checkoutBtn;
 
+    @FindBy(xpath = "//dl[@class = 'delivery-text']/dd")
+    private WebElement deliveryCost;
+
     public void openBasketPage() {
         DriverManager.getDriver().get(BASKET_URL);
     }
@@ -41,9 +44,16 @@ public class BasketPage extends AbstractPage {
         return checkoutBtn;
     }
 
-    public CheckoutPage checkoutBtnClick() {
+    public void checkoutBtnClick() {
         checkoutBtn.click();
+    }
+
+    public CheckoutPage checkoutPageOpened() {
         return new CheckoutPage();
+    }
+
+    public String getDeliveryCost() {
+        return deliveryCost.getText();
     }
 
 }
