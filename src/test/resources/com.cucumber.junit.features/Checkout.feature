@@ -28,7 +28,7 @@ Feature: Checkout
     Given I am an anonymous customer with clear cookies
     And I open the "Initial home page"
     And I search for "Thinking in Java"
-    And I am redirected to a "Search page"
+    And I am redirected to the "Search page"
     And Search results contain the following products
       | Thinking in Java       |
       | Thinking Java Part I   |
@@ -48,9 +48,9 @@ Feature: Checkout
     And I am redirected to the "Basket page"
     And Basket order summary is as following:
       | Delivery cost | Total   |
-      | FREE          | 81,94 € |
+      | FREE          | 70,82 € |
     And I click 'Checkout' button on 'Basket' page
-    Then I am redirected to the "Checkout" page
+    Then I am redirected to the "Checkout page"
     When I click 'Buy now' button
     Then the following validation error messages are displayed on 'Delivery Address' form:
       | Form field name | validation error message                              |
@@ -63,7 +63,7 @@ Feature: Checkout
       | Please enter your card number, Please enter your card's expiration date, Please enter your CVV |
     And Checkout order summary is as following:
       | Sub-total | Delivery | VAT    | Total   |
-      | 81,94 €   | FREE     | 0,00 € | 81,94 € |
+      | 70,82 €   | FREE     | 0,00 € | 70,82 € |
     And I checkout as a new customer with email "test@user.com"
     And I fill delivery address information manually:
       | Full name | Delivery country | Address line 1   | Address line 2   | Town/City | County/State | Postcode |

@@ -1,12 +1,14 @@
 package com.cucumber.junit.steps;
 
 import com.cucumber.junit.pages.*;
+import com.cucumber.junit.util.RegExParser;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,12 +16,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CheckoutSteps {
 
+    public static Map<String, String> pageURLmap;
+
+    static {
+        pageURLmap = new HashMap<>();
+        pageURLmap.put("Initial home page", "");
+        pageURLmap.put("Search page", "/search");
+        pageURLmap.put("Basket page", "/basket");
+        pageURLmap.put("Checkout page", "/payment");
+    }
+
     private PDPPAge pdpPage;
     private BasketPage basketPage;
     private CheckoutPage checkoutPage;
     private HomePage homePage;
     private SearchPage searchPage;
-
 
     @When("^the (?:user|guest) is on PDP of the book with ISBN (\\d+)$")
     public void openSpecificPDPOfTheBookWithISBN(String isbn) {
@@ -92,23 +103,27 @@ public class CheckoutSteps {
 
     @Given("I am an anonymous customer with clear cookies")
     public void iAmAnAnonymousCustomerWithClearCookies() {
+        homePage = new HomePage();
+        homePage.openBookdepositoryWebsite();
     }
 
     @And("I open the {string}")
     public void iOpenThe(String page) {
-        homePage = new HomePage();
-        homePage.openBookdepositoryWebsite();
+        AbstractPage.openSitePage(pageURLmap.get(page));
     }
 
     @And("I search for {string}")
     public void iSearchFor(String book) {
         homePage.searchForBook(book);
+        searchPage = homePage.searchBtnClickJS();
     }
 
-    @And("I am redirected to a {string}")
+    @And("I am redirected to the {string}")
     public void iAmRedirectedToA(String page) {
 
-        searchPage = homePage.searchBtnClickJS();
+        String currentPageInnerURL = RegExParser.getInnerURL(AbstractPage.getURL());
+
+        assertEquals(pageURLmap.get(page), currentPageInnerURL, "Incorrect URL");
     }
 
     @And("^Search results contain the following products$")
@@ -117,9 +132,9 @@ public class CheckoutSteps {
         List<String> searchedBooks = searchPage.getListOfFirst30SearchedResults();
 
         assertAll("Check the Search Result",
-                () -> assertTrue(searchedBooks.contains(expectedBooks.get(0)), "Search result does not contain " + expectedBooks.get(0)+"."),
-                () -> assertTrue(searchedBooks.contains(expectedBooks.get(1)), "Search result does not contain " + expectedBooks.get(1)+"."),
-                () -> assertTrue(searchedBooks.contains(expectedBooks.get(2)), "Search result does not contain " + expectedBooks.get(2)+"."),
+                () -> assertTrue(searchedBooks.contains(expectedBooks.get(0)), "Search result does not contain " + expectedBooks.get(0) + "."),
+                () -> assertTrue(searchedBooks.contains(expectedBooks.get(1)), "Search result does not contain " + expectedBooks.get(1) + "."),
+                () -> assertTrue(searchedBooks.contains(expectedBooks.get(2)), "Search result does not contain " + expectedBooks.get(2) + "."),
                 () -> assertTrue(searchedBooks.containsAll(expectedBooks), "Some of expected books are not present in the search result.")
         );
     }
@@ -140,7 +155,7 @@ public class CheckoutSteps {
 
         List<String> searchedBooks = searchPage.getListOfFirst30SearchedResults();
 
-        assertEquals(expectedBooks, searchedBooks,"There is a difference between Expected and Actual Search Results");
+        assertEquals(expectedBooks, searchedBooks, "There is a difference between Expected and Actual Search Results");
 
     }
 
@@ -152,10 +167,6 @@ public class CheckoutSteps {
     @And("^I select 'Basket/Checkout' in basket pop-up$")
     public void iSelectBasketCheckoutInBasketPopUp() {
         searchPage.basketCheckout();
-    }
-
-    @And("I am redirected to the {string}")
-    public void iAmRedirectedToTheBasketPage(String page) {
         basketPage = searchPage.basketCheckoutBtnClick();
     }
 
@@ -174,10 +185,6 @@ public class CheckoutSteps {
     @And("^I click 'Checkout' button on 'Basket' page$")
     public void iClickCheckoutButtonOnBasketPage() {
         basketPage.checkoutBtnClick();
-    }
-
-    @Then("I am redirected to the {string} page")
-    public void iAmRedirectedToThePage(String page) {
         checkoutPage = basketPage.checkoutPageOpened();
     }
 
@@ -192,17 +199,17 @@ public class CheckoutSteps {
 
         assertAll("Check the Validation Error Messages",
 
-                () -> assertEquals(validationErrorMessages.get("Email address"), checkoutPage.invalidEmailErrorMessage() ,
+                () -> assertEquals(validationErrorMessages.get("Email address"), checkoutPage.invalidEmailErrorMessage(),
                         "Validation Email Error message is not displayed or differs from the Expected."),
-                () -> assertEquals(validationErrorMessages.get("Full name"), checkoutPage.invalidFullNameErrorMessage() ,
+                () -> assertEquals(validationErrorMessages.get("Full name"), checkoutPage.invalidFullNameErrorMessage(),
                         "Validation Full Name Error message is not displayed or differs from the Expected."),
-                () -> assertEquals(validationErrorMessages.get("Address line 1"), checkoutPage.invalidAddressLine1ErrorMessage() ,
+                () -> assertEquals(validationErrorMessages.get("Address line 1"), checkoutPage.invalidAddressLine1ErrorMessage(),
                         "Validation Address Line 1 Error message is not displayed or differs from the Expected."),
-                () -> assertEquals(validationErrorMessages.get("Town/City"), checkoutPage.invalidCityErrorMessage() ,
+                () -> assertEquals(validationErrorMessages.get("Town/City"), checkoutPage.invalidCityErrorMessage(),
                         "Validation Town/City Error message is not displayed or differs from the Expected."),
-                () -> assertEquals(validationErrorMessages.get("Postcode/ZIP"), checkoutPage.invalidPostcodeErrorMessage() ,
+                () -> assertEquals(validationErrorMessages.get("Postcode/ZIP"), checkoutPage.invalidPostcodeErrorMessage(),
                         "Validation Postcode/ZIP Error message is not displayed or differs from the Expected.")
-                );
+        );
     }
 
     @And("^the following validation error messages are displayed on 'Payment' form:$")
@@ -210,8 +217,8 @@ public class CheckoutSteps {
         List<String> paymentValidationErrorMessages = table.asList(String.class);
 
         assertEquals(paymentValidationErrorMessages.get(0).replace(", ", "\n"),
-                        checkoutPage.paymentFieldsValidationErrorMessage(),
-                        "Validation Error message for Payment fields is not displayed or differs from the Expected.");
+                checkoutPage.paymentFieldsValidationErrorMessage(),
+                "Validation Error message for Payment fields is not displayed or differs from the Expected.");
 
     }
 
