@@ -12,7 +12,8 @@ import org.junit.runner.RunWith;
                 "junit:target/cucumber-reports/CucumberTests.xml"},
         monochrome = true,
          //tags = "@checkout",
-        tags = "@regression",
+        //tags = "@regression",
+        tags = "@addToKruidvat",
         glue = "com.cucumber.junit",
         features = "src/test/resources/com.cucumber.junit.features"
 )
