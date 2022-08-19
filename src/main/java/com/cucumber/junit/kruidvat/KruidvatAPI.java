@@ -1,6 +1,8 @@
 package com.cucumber.junit.kruidvat;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import io.cucumber.messages.internal.com.fasterxml.jackson.core.JsonProcessingException;
 import io.cucumber.messages.internal.com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.messages.internal.com.fasterxml.jackson.databind.ObjectWriter;
@@ -15,12 +17,13 @@ import static io.restassured.RestAssured.given;
 
 public class KruidvatAPI {
 
-    private static final String baseURL = "https://www.kruidvat.nl";
-    private static final String cartEndpoint = "/api/v2/kvn/users/anonymous/carts";
-    private static final String cartEntriesEndpoint = "/entries";
-    private static final String payload = "{\"product\": {\"code\": \"2876350\"},\"quantity\": 1}";
+    public static final String baseURL = "https://www.kruidvat.nl";
+    public static final String cartEndpoint = "/api/v2/kvn/users/anonymous/carts";
+    public static final String cartEntriesEndpoint = "/entries";
+    public static final String payload = "{\"product\": {\"code\": \"2876350\"},\"quantity\": 1}";
     public Map session = new HashMap<String, String>();
     private final String cartURL = baseURL + cartEndpoint + "/" + session.get("guid") + cartEntriesEndpoint;
+
 
     public static void main(String[] args) {
         //createKVNCart();
@@ -69,20 +72,29 @@ public class KruidvatAPI {
         Response response = given()
                 .header("Content-type", "application/json")
                 .body(cartPayload).post(baseURL + cartEndpoint + "/" + session.get("guid") + cartEntriesEndpoint);
+
+
         //ResponseBody body = response.getBody();
         //System.out.println("Response Body is1: " + body.asString());
     }
 
-    public String getTheCart() {
+    public Response getTheCart() {
         System.out.println(session.get("guid"));
         Response response = given().get(baseURL + cartEndpoint + "/" + session.get("guid") + cartEntriesEndpoint);
+
         ResponseBody body = response.getBody();
         System.out.println("Response Body is2: " + body.asString());
 
+        return response;
 
-
-
-        return body.asString();
     }
+
+
+    public JsonObject jObjectFromString(String jsonString) {
+        JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
+        return jsonObject;
+
+    }
+
 
 }

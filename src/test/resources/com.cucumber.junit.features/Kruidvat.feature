@@ -5,8 +5,8 @@ Feature: Add a Product to the Basket on Kruidvat
     #Given Initial setup is made
     When Create Cart via API
     And Add product to Cart via API
-    #Then Verify cart response has expected json schema
-    And Verify cart response has expected quantity and product code
+    Then Verify cart response has expected json schema
+    #And Verify cart response has expected quantity and product code
     #And Open web application "https://www.kruidvat.nl"
     #And Authenticate to web application by adding cookie "kvn-cart" with the guid to the browser via UI
     #And Navigate to Cart page
