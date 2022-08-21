@@ -13,6 +13,8 @@ import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebElement;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.core.Is.is;
 
 public class KruidvatSteps {
 
@@ -23,7 +25,6 @@ public class KruidvatSteps {
     @When("Create Cart via API")
     public void createCartViaAPI() {
         kruidvatAPI.createKVNCart();
-
     }
 
     @And("Add product to Cart via API")
@@ -43,8 +44,13 @@ public class KruidvatSteps {
 
     @And("Verify cart response has expected quantity and product code")
     public void verifyCartResponseHasExpectedQuantityAndProductCode() {
-        //kruidvatAPI.getTheCart();
-
+        kruidvatAPI.getTheCart()
+                .then()
+                .assertThat()
+                .body("size()", is(1))
+                .body("orderEntries[0].entryNumber", equalTo(0))
+                .body("orderEntries[0].quantity", equalTo(1))
+                .body("orderEntries[0].product.code", equalTo("2876350"));
     }
 
     @And("Open web application {string}")

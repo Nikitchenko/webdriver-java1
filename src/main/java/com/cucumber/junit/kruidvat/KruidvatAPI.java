@@ -9,8 +9,12 @@ import io.cucumber.messages.internal.com.fasterxml.jackson.databind.ObjectWriter
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
@@ -23,6 +27,7 @@ public class KruidvatAPI {
     public static final String payload = "{\"product\": {\"code\": \"2876350\"},\"quantity\": 1}";
     public Map session = new HashMap<String, String>();
     private final String cartURL = baseURL + cartEndpoint + "/" + session.get("guid") + cartEntriesEndpoint;
+    private Object m;
 
 
     public static void main(String[] args) {
@@ -89,12 +94,15 @@ public class KruidvatAPI {
 
     }
 
-
     public JsonObject jObjectFromString(String jsonString) {
         JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
         return jsonObject;
-
     }
 
+
+    public void  getQuantity() throws NoSuchFieldException, IllegalAccessException {
+
+
+    }
 
 }
