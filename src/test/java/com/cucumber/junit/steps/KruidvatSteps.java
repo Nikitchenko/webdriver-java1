@@ -15,6 +15,7 @@ import org.openqa.selenium.WebElement;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.core.Is.is;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class KruidvatSteps {
 
@@ -27,10 +28,10 @@ public class KruidvatSteps {
         kruidvatAPI.createKVNCart();
     }
 
-    @And("Add product to Cart via API")
-    public void addProductToCartViaAPI() throws JsonProcessingException {
-        kruidvatAPI.addTheProductToTheCart();
+    @And("Add product with code {string} and quantity {string} to Cart via API")
+    public void addProductToCartViaAPI(String code, String  quantity) throws JsonProcessingException {
 
+        kruidvatAPI.addTheProductToTheCart(code, Integer.parseInt(quantity));
     }
 
     @Then("Verify cart response has expected json schema")
@@ -42,15 +43,16 @@ public class KruidvatSteps {
                 .body(matchesJsonSchemaInClasspath("kvn_schema.json"));
     }
 
-    @And("Verify cart response has expected quantity and product code")
-    public void verifyCartResponseHasExpectedQuantityAndProductCode() {
+    @And("Verify cart response has expected product with code {string} and quantity {string}")
+    public void verifyCartResponseHasExpectedQuantityAndProductCode(String code, String quantity) {
+
         kruidvatAPI.getTheCart()
                 .then()
                 .assertThat()
                 .body("size()", is(1))
                 .body("orderEntries[0].entryNumber", equalTo(0))
-                .body("orderEntries[0].quantity", equalTo(1))
-                .body("orderEntries[0].product.code", equalTo("2876350"));
+                .body("orderEntries[0].quantity", equalTo(Integer.parseInt(quantity)))
+                .body("orderEntries[0].product.code", equalTo(code));
     }
 
     @And("Open web application {string}")
@@ -65,11 +67,11 @@ public class KruidvatSteps {
         //KruidvatAbstract.clearAllCookies();
         //KruidvatAbstract.addTheCookie(cookie, guid);
         DriverManager.getDriver().manage().deleteAllCookies(); // Deletes all the cookies
-        Thread.sleep(3000);
+        //Thread.sleep(1000);
         DriverManager.getDriver().manage().addCookie(new Cookie(cookie, (String) kruidvatAPI.session.get("guid"))); //Creates and adds the cookie
-        Thread.sleep(3000);
+        Thread.sleep(1000);
         DriverManager.getDriver().navigate().refresh();
-        Thread.sleep(3000);
+        //Thread.sleep(1000);
     }
 
     @And("Navigate to Cart page")
@@ -78,12 +80,17 @@ public class KruidvatSteps {
         DriverManager.getDriver().get("https://www.kruidvat.nl/cart");
     }
 
-    @And("Verify that cart contains expected product via UI")
-    public void verifyThatCartContainsExpectedProductViaUI() throws InterruptedException {
-        Thread.sleep(3000);
-        WebElement product = DriverManager.getDriver().findElement(By.xpath("//a[@class = 'product-summary__img-link']"));
+    @And("Verify in UI that cart contains expected expected product with code {string} and quantity {string}")
+    public void verifyThatCartContainsExpectedProductViaUI(String code, String quantity ) throws InterruptedException {
+        Thread.sleep(2000);
 
-        System.out.println(product.getAttribute("href"));
+        WebElement product = DriverManager.getDriver().findElement(By.xpath("//a[@class = 'product-summary__img-link']"));
+        WebElement counter = DriverManager.getDriver().findElement(By.xpath("//span[@class = 'minicart__quantity-badge-number']"));
+
+        assertAll("Check the Basket",
+                () -> assertTrue(product.getAttribute("href").contains(code), "Not expected code"),
+                () -> assertEquals(quantity, counter.getText(), "More products in the Cart than needed.")
+        );
     }
 
 
