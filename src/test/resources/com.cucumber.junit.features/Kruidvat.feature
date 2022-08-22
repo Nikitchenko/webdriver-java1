@@ -8,5 +8,5 @@ Feature: Add a Product to the Basket on Kruidvat
     And Verify cart response has expected product with code "2876350" and quantity "1"
     And Open web application "https://www.kruidvat.nl"
     And Authenticate to web application by adding cookie "kvn-cart" with the guid to the browser via UI
-    And Navigate to Cart page
+    And Navigate to Cart page "https://www.kruidvat.nl/cart"
     And Verify in UI that cart contains expected expected product with code "2876350" and quantity "1"
