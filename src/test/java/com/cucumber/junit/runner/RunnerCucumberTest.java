@@ -9,9 +9,11 @@ import org.junit.runner.RunWith;
         plugin = {"pretty",
                 "html:target/cucumber-reports/CucumberTests.html",
                 "json:target/cucumber-reports/CucumberTests.json",
-                "junit:target/cucumber-reports/CucumberTests.xml"},
+                "junit:target/cucumber-reports/CucumberTests.xml",
+                "com.epam.reportportal.cucumber.ScenarioReporter"
+        },
         monochrome = true,
-         //tags = "@checkout",
+        //tags = "@checkout",
         tags = "@regression",
         glue = "com.cucumber.junit",
         features = "src/test/resources/com.cucumber.junit.features"
