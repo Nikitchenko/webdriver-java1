@@ -19,7 +19,7 @@ public class ScreenshotHook {
         if (scenario.isFailed()) {
             logger.error("Scenario is failed.");
 
-            logger.debug("Current URL is: " );
+            logger.debug("Current URL is: " + DriverManager.getDriver().getCurrentUrl());
             scenario.log(DriverManager.getDriver().getCurrentUrl());
             // log instead of write
 
