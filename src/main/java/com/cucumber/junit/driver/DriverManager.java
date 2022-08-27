@@ -4,6 +4,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import com.codeborne.selenide.Configuration;
+
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static com.codeborne.selenide.WebDriverRunner.setWebDriver;
+import static com.cucumber.junit.constants.Constants.BOOKDEPOSITORY_URL;
 
 public class DriverManager {
 
@@ -19,17 +24,22 @@ public class DriverManager {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(12, TimeUnit.SECONDS);
-        webDriverThreadLocal.set(driver);
+        //webDriverThreadLocal.set(driver);
+
+        setWebDriver(driver);
+        //Configuration.browser = "chrome";
+        //Configuration.baseUrl = BOOKDEPOSITORY_URL;
+
     }
 
     public static WebDriver getDriver(){
-        return webDriverThreadLocal.get();
+        return getWebDriver();
 
     }
     public static void quitDriver(){
         Optional.ofNullable(getDriver()).ifPresent(webDriver -> {
             webDriver.quit();
-            webDriverThreadLocal.remove();
+            //webDriverThreadLocal.remove();
         });
 
     }

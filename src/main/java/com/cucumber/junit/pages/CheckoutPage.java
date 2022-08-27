@@ -1,6 +1,8 @@
 package com.cucumber.junit.pages;
 
+import com.codeborne.selenide.Condition;
 import com.cucumber.junit.driver.DriverManager;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -10,6 +12,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
+import static com.codeborne.selenide.Selenide.$;
 import static com.cucumber.junit.constants.Constants.CHECKOUT_URL;
 
 public class CheckoutPage extends AbstractPage {
@@ -33,7 +36,7 @@ public class CheckoutPage extends AbstractPage {
     private WebElement invalidEmailErrorMessageElem;
 
     @FindBy(xpath = "//input[@name='delivery-telephone']")
-    private WebElement checkoutDeliveryPhoneField;
+   private WebElement checkoutDeliveryPhoneField;
 
     @FindBy(xpath = "//button[text() = 'Buy now']")
     private WebElement buyNowBtn;
@@ -46,6 +49,9 @@ public class CheckoutPage extends AbstractPage {
 
     @FindBy(xpath = "//select[@id = 'delivery-CountryDropdown']")
     private WebElement deliveryCountryDropdown;
+
+    @FindBy(xpath = "//div[@id='deliveryCountryDropdown']//following-sibling::div[@class = 'error-block']")
+    private WebElement invalidDeliveryCountryErrorElem;
 
     @FindBy(xpath = "//button[@name = 'manualEntryButton']")
     private WebElement manualEntryAddressButton;
@@ -110,11 +116,14 @@ public class CheckoutPage extends AbstractPage {
     }
 
     public String getCheckoutSubtotal() {
-        return checkoutSubtotalElem.getText();
+        //return checkoutSubtotalElem.getText();
+        return $(checkoutSubtotalElem).getText();
     }
 
     public String getCheckoutDelivery() {
-        return checkoutDeliveryElem.getText();
+        //return checkoutDeliveryElem.getText();
+        return $(checkoutDeliveryElem).getText();
+
     }
 
     public WebElement getCheckoutVATElem() {
@@ -122,7 +131,8 @@ public class CheckoutPage extends AbstractPage {
     }
 
     public String getCheckoutVAT() {
-        return checkoutVATElem.getText();
+        //return checkoutVATElem.getText();
+        return $(checkoutVATElem).getText();
     }
 
     public WebElement getCheckoutTotalElem() {
@@ -130,7 +140,9 @@ public class CheckoutPage extends AbstractPage {
     }
 
     public String getCheckoutTotal() {
-        return checkoutTotalElem.getText();
+        //return checkoutTotalElem.getText();
+        return $(checkoutTotalElem).getText();
+
     }
 
     public WebElement getCheckoutEmailAddressField() {
@@ -138,21 +150,29 @@ public class CheckoutPage extends AbstractPage {
     }
 
     public void provideCheckoutEmail(String checkoutEmail) {
-        checkoutEmailAddressField.sendKeys(checkoutEmail);
+        //checkoutEmailAddressField.sendKeys(checkoutEmail);
+        $(checkoutEmailAddressField).setValue(checkoutEmail);
     }
 
     public void provideCheckoutPhone(String checkoutPhone) {
-        checkoutDeliveryPhoneField.sendKeys(checkoutPhone);
+        //checkoutDeliveryPhoneField.sendKeys(checkoutPhone);
+        $(checkoutDeliveryPhoneField).setValue(checkoutPhone);
     }
 
     public void provideFullName(String fullName) {
-        fullNameField.sendKeys(fullName);
+        //fullNameField.sendKeys(fullName);
+        $(fullNameField).setValue(fullName);
+
     }
 
     public void setDeliveryCountry(String deliveryCountry) {
-        waitExplicit.until(ExpectedConditions.elementToBeClickable(deliveryCountryDropdown));
-        Select selectCountry = new Select(deliveryCountryDropdown);
-        selectCountry.selectByVisibleText(deliveryCountry);
+        //waitExplicit.until(ExpectedConditions.elementToBeClickable(deliveryCountryDropdown));
+        //Select selectCountry = new Select(deliveryCountryDropdown);
+        //selectCountry.selectByVisibleText(deliveryCountry);
+        System.out.println(deliveryCountry);
+        $(By.id("delivery-CountryDropdown"))
+                .shouldBe(Condition.visible)
+                .selectOptionByValue(deliveryCountry);
     }
 
     public void manualEntryAddressButtonClick() {
@@ -161,136 +181,168 @@ public class CheckoutPage extends AbstractPage {
     }
 
     public void provideDeliveryAddressLine1(String deliveryAddressLine1) {
-        deliveryAddressLine1Input.sendKeys(deliveryAddressLine1);
+        //deliveryAddressLine1Input.sendKeys(deliveryAddressLine1);
+        $(deliveryAddressLine1Input).setValue(deliveryAddressLine1);
     }
 
     public void provideDeliveryAddressLine2(String deliveryAddressLine2) {
-        deliveryAddressLine2Input.sendKeys(deliveryAddressLine2);
+        //deliveryAddressLine2Input.sendKeys(deliveryAddressLine2);
+        $(deliveryAddressLine2Input).setValue(deliveryAddressLine2);
     }
 
     public void provideDeliveryCity(String deliveryCity) {
-        deliveryCityInput.sendKeys(deliveryCity);
+        //deliveryCityInput.sendKeys(deliveryCity);
+        $(deliveryCityInput).setValue(deliveryCity);
     }
 
     public void provideDeliveryCounty(String deliveryCounty) {
-        deliveryCountyInput.sendKeys(deliveryCounty);
+        //deliveryCountyInput.sendKeys(deliveryCounty);
+        $(deliveryCountyInput).setValue(deliveryCounty);
     }
 
     public void provideDeliveryPostcode(String deliveryPostcode) {
-        deliveryPostcodeInput.sendKeys(deliveryPostcode);
-        deliveryPostcodeInput.sendKeys(Keys.TAB);
+        //deliveryPostcodeInput.sendKeys(deliveryPostcode);
+        //deliveryPostcodeInput.sendKeys(Keys.TAB);
+        $(deliveryPostcodeInput).setValue(deliveryPostcode).pressTab();
     }
 
-    public WebElement getBuyNowBtn() {
+   public WebElement getBuyNowBtn() {
         return buyNowBtn;
     }
 
     public void buyNowBtnClick() {
-        buyNowBtn.click();
+        //buyNowBtn.click();
+        $(buyNowBtn).click();
     }
 
-    public WebElement getInvalidErrorMessageElem() {
-        return invalidEmailErrorMessageElem;
-    }
+    //public WebElement getInvalidErrorMessageElem() {
+        //return invalidEmailErrorMessageElem;
+    //}
 
     public Boolean isInvalidEmailErrorMessageDisplayed() {
         return invalidEmailErrorMessageElem.isDisplayed();
     }
 
     public String invalidEmailErrorMessage() {
-        return invalidEmailErrorMessageElem.getText();
+        //return invalidEmailErrorMessageElem.getText();
+        return $(invalidEmailErrorMessageElem).getText();
     }
 
     public Boolean isInvalidDeliveryFullNameMessageDisplayed() {
-        return invalidDeliveryFullNameErrorElem.isDisplayed();
+        //return invalidDeliveryFullNameErrorElem.isDisplayed();
+        return $(invalidDeliveryFullNameErrorElem).isDisplayed();
+    }
+
+    public Boolean isInvalidDeliveryCountryMessageDisplayed() {
+        //return invalidDeliveryFullNameErrorElem.isDisplayed();
+        return $(invalidDeliveryCountryErrorElem).isDisplayed();
     }
 
     public String invalidFullNameErrorMessage() {
-        return invalidDeliveryFullNameErrorElem.getText();
+        //return invalidDeliveryFullNameErrorElem.getText();
+        return $(invalidDeliveryFullNameErrorElem).getText();
     }
 
     public Boolean isInvalidDeliveryAddressLine1MessageDisplayed() {
-        return invalidDeliveryAddressLine1ErrorElem.isDisplayed();
+        //return invalidDeliveryAddressLine1ErrorElem.isDisplayed();
+        return $(invalidDeliveryAddressLine1ErrorElem).isDisplayed();
     }
 
     public String invalidAddressLine1ErrorMessage() {
-        return invalidDeliveryAddressLine1ErrorElem.getText();
+        //return invalidDeliveryAddressLine1ErrorElem.getText();
+        return $(invalidDeliveryAddressLine1ErrorElem).getText();
     }
 
     public Boolean isInvalidDeliveryAddressLine2MessageDisplayed() {
-        return invalidDeliveryAddressLine2ErrorElem.isDisplayed();
+        //return invalidDeliveryAddressLine2ErrorElem.isDisplayed();
+        return $(invalidDeliveryAddressLine2ErrorElem).isDisplayed();
     }
 
     public Boolean isInvalidDeliveryCityMessageDisplayed() {
-        return invalidDeliveryCityErrorElem.isDisplayed();
+        //return invalidDeliveryCityErrorElem.isDisplayed();
+        return $(invalidDeliveryCityErrorElem).isDisplayed();
     }
 
     public String invalidCityErrorMessage() {
-        return invalidDeliveryCityErrorElem.getText();
+        //return invalidDeliveryCityErrorElem.getText();
+        return $(invalidDeliveryCityErrorElem).getText();
     }
 
     public Boolean isInvalidDeliveryCountyMessageDisplayed() {
-        return invalidDeliveryCountyErrorElem.isDisplayed();
+        //return invalidDeliveryCountyErrorElem.isDisplayed();
+        return $(invalidDeliveryCountyErrorElem).isDisplayed();
     }
 
     public Boolean isInvalidDeliveryPostcodeMessageDisplayed() {
-        return invalidDeliveryPostcodeErrorElem.isDisplayed();
+        //return invalidDeliveryPostcodeErrorElem.isDisplayed();
+        return $(invalidDeliveryPostcodeErrorElem).isDisplayed();
     }
 
     public String invalidPostcodeErrorMessage() {
-        return invalidDeliveryPostcodeErrorElem.getText();
+        //return invalidDeliveryPostcodeErrorElem.getText();
+        return $(invalidDeliveryPostcodeErrorElem).getText();
     }
 
     public String paymentFieldsValidationErrorMessage() {
-        return paymentFieldsValidationErrorMsgElem.getText();
+        //return paymentFieldsValidationErrorMsgElem.getText();
+        return $(paymentFieldsValidationErrorMsgElem).getText();
     }
+
+
+
 
     public void provideCreditCardNumber(String creditCardNumber) {
         DriverManager.getDriver().switchTo().frame(creditCardNumberFrame);
-        creditCardNumberInput.sendKeys(creditCardNumber);
+        ///creditCardNumberInput.sendKeys(creditCardNumber);
+        $(creditCardNumberInput).setValue(creditCardNumber);
         DriverManager.getDriver().switchTo().defaultContent();
     }
 
     public void provideExpirationDate(String expirationDate) {
         DriverManager.getDriver().switchTo().frame(creditCardExpirationFrame);
-        creditCardExpirationDateInput.sendKeys(expirationDate);
+        //creditCardExpirationDateInput.sendKeys(expirationDate);
+        $(creditCardExpirationDateInput).setValue(expirationDate);
         DriverManager.getDriver().switchTo().defaultContent();
     }
 
     public void provideCVV(String cvv) {
         DriverManager.getDriver().switchTo().frame(creditCardCVVFrame);
-        creditCardCVVInput.sendKeys(cvv);
+        //creditCardCVVInput.sendKeys(cvv);
+        $(creditCardCVVInput).setValue(cvv);
         DriverManager.getDriver().switchTo().defaultContent();
     }
 
-    public void provideAddressLinesActions (String line1, String line2) {
-        Actions builder = new Actions(DriverManager.getDriver());
-        Action seriesOfActions = builder
-                .moveToElement(deliveryAddressLine1Input)
-                .click()
-                .sendKeys(line1)
-                .moveToElement(deliveryAddressLine2Input)
-                .click()
-                .sendKeys(line2)
-                .build();
-        seriesOfActions.perform();
-    }
+    //public void provideAddressLinesActions (String line1, String line2) {
+        //Actions builder = new Actions(DriverManager.getDriver());
+        //Action seriesOfActions = builder
+                //.moveToElement(deliveryAddressLine1Input).click().sendKeys(line1)
+                //.moveToElement(deliveryAddressLine2Input).click().sendKeys(line2)
+                //.build();
+        //seriesOfActions.perform();
+    //}
 
-    public void providePostcodeActions(String postcode) {
-        Actions builder = new Actions(DriverManager.getDriver());
-        Action seriesOfActions = builder
-                .moveToElement(deliveryPostcodeInput)
-                .doubleClick()
-                .sendKeys(postcode)
-                .sendKeys(Keys.TAB)
-                .build();
-        seriesOfActions.perform();
-    }
+    //public void providePostcodeActions(String postcode) {
+        //Actions builder = new Actions(DriverManager.getDriver());
+        //Action seriesOfActions = builder
+                //.moveToElement(deliveryPostcodeInput).doubleClick().sendKeys(postcode).sendKeys(Keys.TAB)
+                //.build();
+        //seriesOfActions.perform();
+    //}
 
-    public void buyNowBtnClickJS() {
+    //public void buyNowBtnClickJS() {
+        //JavascriptExecutor js = (JavascriptExecutor)DriverManager.getDriver();
+        //js.executeScript("window.scrollBy(0,3000)");
+        //js.executeScript("arguments[0].click();", buyNowBtn);
+    //}
+
+    public void provideCountryJS(String deliveryCountry) {
+        $(By.xpath("//*[@id=\"delivery-CountryDropdown\"]/option[77]"));
+        //*[@id="delivery-CountryDropdown"]/option[77]
         JavascriptExecutor js = (JavascriptExecutor)DriverManager.getDriver();
         js.executeScript("window.scrollBy(0,3000)");
-        js.executeScript("arguments[0].click();", buyNowBtn);
+        js.executeScript("arguments[0].click();", deliveryCountryDropdown);
+        js.executeScript("arguments[0].click();", $(By.xpath("//*[@id=\"delivery-CountryDropdown\"]/option[77]")));
+
     }
 
 }

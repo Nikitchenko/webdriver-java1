@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.WebDriverRunner.url;
 import static com.cucumber.junit.constants.Constants.BOOKDEPOSITORY_URL;
 
 public abstract class AbstractPage {
@@ -18,11 +20,14 @@ public abstract class AbstractPage {
     }
 
     public static void openSitePage(String url) {
-        DriverManager.getDriver().get(BOOKDEPOSITORY_URL + url);
+        //DriverManager.getDriver().get(BOOKDEPOSITORY_URL + url);
+        open(BOOKDEPOSITORY_URL + url);
     }
 
     public static String getURL() {
-        return DriverManager.getDriver().getCurrentUrl();
+
+        //return DriverManager.getDriver().getCurrentUrl();
+        return url();
     }
 
     public WebElement findElement(By by) {
