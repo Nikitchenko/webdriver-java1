@@ -53,12 +53,12 @@ Feature: Checkout
     Then I am redirected to the "Checkout page"
     When I click 'Buy now' button
     Then the following validation error messages are displayed on 'Delivery Address' form:
-      | Form field name | validation error message                              |
-      | Email address   | Please enter your Email address (for order confirmation)|
-      | Full name       | Please enter your Full name                           |
-      | Address line 1  | Please enter your Address line 1                      |
-      | Town/City       | Please enter your Town/City                           |
-      | Postcode/ZIP    | Please enter your postcode/ZIP or write 'No Postcode' |
+      | Form field name | validation error message                                 |
+      | Email address   | Please enter your Email address (for order confirmation) |
+      | Full name       | Please enter your Full name                              |
+      | Address line 1  | Please enter your Address line 1                         |
+      | Town/City       | Please enter your Town/City                              |
+      | Postcode/ZIP    | Please enter your postcode/ZIP or write 'No Postcode'    |
     And the following validation error messages are displayed on 'Payment' form:
       | Please enter your card number, Please enter your card's expiration date, Please enter your CVV |
     And Checkout order summary is as following:
@@ -67,7 +67,7 @@ Feature: Checkout
     And I checkout as a new customer with email "test@user.com"
     And I fill delivery address information manually:
       | Full name | Delivery country | Address line 1   | Address line 2   | Town/City | County/State | Postcode |
-      | John Barr      | Poland           | Random address 1 | Random address 2 | Kyiv      | Random State | 12345    |
+      | John Barr | Poland           | Random address 1 | Random address 2 | Kyiv      | Random State | 12345    |
     Then there is no validation error messages displayed on 'Delivery Address' form
     And I enter my card details
       | Card Type    | Visa             |
