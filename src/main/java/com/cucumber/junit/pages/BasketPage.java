@@ -1,7 +1,5 @@
 package com.cucumber.junit.pages;
 
-import com.cucumber.junit.driver.DriverManager;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -22,9 +20,8 @@ public class BasketPage extends AbstractPage {
     private WebElement checkoutBtn;
 
     public void openBasketPage() {
-        DriverManager.getDriver().get(BASKET_URL);
+        openSitePage(BASKET_URL);
     }
-
 
     public String getItemTotal() {
         return itemTotalElem.getText();

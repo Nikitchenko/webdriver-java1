@@ -2,11 +2,8 @@ package com.cucumber.junit.pages;
 
 import com.codeborne.selenide.Condition;
 import com.cucumber.junit.driver.DriverManager;
-import com.cucumber.junit.util.Waiter;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -14,8 +11,6 @@ import static com.codeborne.selenide.WebDriverRunner.url;
 import static com.cucumber.junit.constants.Constants.BOOKDEPOSITORY_URL;
 
 public abstract class AbstractPage {
-
-    protected WebDriverWait waitExplicit = Waiter.waitExplicit();
 
     protected AbstractPage() {
         PageFactory.initElements(DriverManager.getDriver(), this);
@@ -29,7 +24,6 @@ public abstract class AbstractPage {
         return url();
     }
 
-
     public void provideTextInInputField(WebElement inputField, String text) {
         $(inputField).setValue(text);
     }
@@ -38,7 +32,7 @@ public abstract class AbstractPage {
         $(inputField).setValue(text).pressTab();
     }
 
-    public void elementClick (WebElement element) {
+    public void elementClick(WebElement element) {
         $(element).click();
     }
 

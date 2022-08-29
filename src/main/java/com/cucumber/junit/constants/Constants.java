@@ -3,10 +3,10 @@ package com.cucumber.junit.constants;
 public class Constants {
 
     public static final String BOOKDEPOSITORY_URL = "https://www.bookdepository.com";
-    public static final String PDP_URL = BOOKDEPOSITORY_URL + "/pdp/";
-    public static final String BASKET_URL = BOOKDEPOSITORY_URL + "/basket";
-    public static final String CHECKOUT_URL = BOOKDEPOSITORY_URL + "/payment/guest";
-    public static final String SEARCH_URL = BOOKDEPOSITORY_URL + "/search";
+    public static final String PDP_URL = "/pdp/";
+    public static final String BASKET_URL = "/basket";
+    public static final String CHECKOUT_URL = "/payment/guest";
+    public static final String SEARCH_URL = "/search";
 
     public static final String THE_BOOK1_NAME = "Selenium Design Patterns and Best Practices";
     public static final String THE_BOOK1_ISBN13 = "9781783982707";
