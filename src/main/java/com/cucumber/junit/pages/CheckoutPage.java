@@ -111,13 +111,7 @@ public class CheckoutPage extends AbstractPage {
         DriverManager.getDriver().get(CHECKOUT_URL);
     }
 
-    public WebElement getCheckoutSubtotalElem() {
-        return checkoutSubtotalElem;
-    }
 
-    public WebElement getBuyNowBtn() {
-        return buyNowBtn;
-    }
 
     public void buyNowBtnClick() {
         elementClick(buyNowBtn);
@@ -179,16 +173,9 @@ public class CheckoutPage extends AbstractPage {
         provideTextInInputField(deliveryAddressLine2Input, deliveryAddressLine2);
     }
 
-
-    // to refactor
+    
     public void setDeliveryCountry(String deliveryCountry) {
-        //waitExplicit.until(ExpectedConditions.elementToBeClickable(deliveryCountryDropdown));
-        //Select selectCountry = new Select(deliveryCountryDropdown);
-        //selectCountry.selectByVisibleText(deliveryCountry);
-        System.out.println(deliveryCountry);
-        $(By.id("delivery-CountryDropdown"))
-                .shouldBe(Condition.visible)
-                .selectOptionByValue(deliveryCountry);
+        selectOptionInSelector(deliveryCountryDropdown, deliveryCountry);
     }
 
     public void provideDeliveryCity(String deliveryCity) {
@@ -200,9 +187,7 @@ public class CheckoutPage extends AbstractPage {
     }
 
     public void provideDeliveryPostcode(String deliveryPostcode) {
-        $(deliveryPostcodeInput).setValue(deliveryPostcode).pressTab();
-        // to refactor
-        //provideTextInInputField(deliveryPostcodeInput, deliveryPostcode).pressTab();
+        provideTextInInputFieldWithTab(deliveryPostcodeInput, deliveryPostcode);
     }
 
     public Boolean isInvalidDeliveryFullNameMessageDisplayed() {
@@ -249,54 +234,21 @@ public class CheckoutPage extends AbstractPage {
     }
 
 
-
-
-    public WebElement getCheckoutVATElem() {
-        return checkoutVATElem;
+    public Boolean isInvalidEmailErrorMessageDisplayed() {
+        return isElementDisplayed(invalidEmailErrorMessageElem);
     }
-
-    public WebElement getCheckoutTotalElem() {
-        return checkoutTotalElem;
-    }
-
-
-
-    public WebElement getCheckoutEmailAddressField() {
-        return checkoutEmailAddressField;
-    }
-
 
 
     public void provideCheckoutPhone(String checkoutPhone) {
-        //checkoutDeliveryPhoneField.sendKeys(checkoutPhone);
-        $(checkoutDeliveryPhoneField).setValue(checkoutPhone);
+        provideTextInInputField(checkoutDeliveryPhoneField, checkoutPhone);
     }
-
-
-
-
 
     public void manualEntryAddressButtonClick() {
-        waitExplicit.until(ExpectedConditions.elementToBeClickable(manualEntryAddressButton));
-        manualEntryAddressButton.click();
+        elementClick(manualEntryAddressButton);
     }
-
-
-    //public WebElement getInvalidErrorMessageElem() {
-        //return invalidEmailErrorMessageElem;
-    //}
-
-    public Boolean isInvalidEmailErrorMessageDisplayed() {
-        return invalidEmailErrorMessageElem.isDisplayed();
-    }
-
-
-
-
 
     public Boolean isInvalidDeliveryCountryMessageDisplayed() {
-        //return invalidDeliveryFullNameErrorElem.isDisplayed();
-        return $(invalidDeliveryCountryErrorElem).isDisplayed();
+        return isElementDisplayed(invalidDeliveryCountryErrorElem);
     }
 
 

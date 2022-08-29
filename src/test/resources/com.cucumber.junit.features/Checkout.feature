@@ -18,7 +18,7 @@ Feature: Checkout
 
     Examples:
       | isbn          | itemPrice | totalPrice | vat    |
-      | 9781783982707 | 32,50 €   | 32,50 €    | 0,00 € |
+      | 9781783982707 | 33,25 €   | 33,25 €    | 0,00 € |
       | 9780131872486 | 80,47 €   | 80,47 €    | 0,00 € |
       | 9780596158101 | 75,54 €   | 75,54 €    | 0,00 € |
 
@@ -48,7 +48,7 @@ Feature: Checkout
     And I am redirected to the "Basket page"
     And Basket order summary is as following:
       | Delivery cost | Total   |
-      | FREE          | 84,72 € |
+      | FREE          | 84,58 € |
     And I click 'Checkout' button on 'Basket' page
     Then I am redirected to the "Checkout page"
     When I click 'Buy now' button
@@ -63,7 +63,7 @@ Feature: Checkout
       | Please enter your card number, Please enter your card's expiration date, Please enter your CVV |
     And Checkout order summary is as following:
       | Sub-total | Delivery | VAT    | Total   |
-      | 84,72 €   | FREE     | 0,00 € | 84,72 € |
+      | 84,58 €   | FREE     | 0,00 € | 84,58 € |
     And I checkout as a new customer with email "test@user.com"
     And I fill delivery address information manually:
       | Full name | Delivery country | Address line 1   | Address line 2   | Town/City | County/State | Postcode |

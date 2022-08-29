@@ -29,23 +29,22 @@ public abstract class AbstractPage {
         return url();
     }
 
-    public WebElement findElement(By by) {
-        return DriverManager.getDriver().findElement(by);
-    }
-
-
-
-    public void selectOptionInSelector(WebElement selector, String optionText) {
-        $(selector).shouldBe(Condition.visible)
-                .selectOptionContainingText(optionText);
-    }
 
     public void provideTextInInputField(WebElement inputField, String text) {
         $(inputField).setValue(text);
     }
 
+    public void provideTextInInputFieldWithTab(WebElement inputField, String text) {
+        $(inputField).setValue(text).pressTab();
+    }
+
     public void elementClick (WebElement element) {
         $(element).click();
+    }
+
+    public void selectOptionInSelector(WebElement selector, String optionText) {
+        $(selector).shouldBe(Condition.visible)
+                .selectOptionContainingText(optionText);
     }
 
     public String getElementText(WebElement element) {
@@ -55,6 +54,5 @@ public abstract class AbstractPage {
     public boolean isElementDisplayed(WebElement element) {
         return $(element).isDisplayed();
     }
-
 
 }
