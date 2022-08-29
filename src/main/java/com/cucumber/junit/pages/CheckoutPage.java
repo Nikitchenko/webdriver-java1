@@ -173,7 +173,7 @@ public class CheckoutPage extends AbstractPage {
         provideTextInInputField(deliveryAddressLine2Input, deliveryAddressLine2);
     }
 
-    
+
     public void setDeliveryCountry(String deliveryCountry) {
         selectOptionInSelector(deliveryCountryDropdown, deliveryCountry);
     }

@@ -1,6 +1,5 @@
 package com.cucumber.junit.steps;
 
-import com.codeborne.selenide.junit5.ScreenShooterExtension;
 import com.cucumber.junit.pages.*;
 import com.cucumber.junit.util.RegExParser;
 import io.cucumber.datatable.DataTable;
@@ -14,15 +13,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.extension.RegisterExtension;
-import static com.codeborne.selenide.Selenide.screenshot;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CheckoutSteps {
-
-    @RegisterExtension
-    public static ScreenShooterExtension screenshotEmAll =
-            new ScreenShooterExtension().to("target/selenide-reports");
 
     public static Map<String, String> pageURLmap;
 
@@ -110,7 +103,6 @@ public class CheckoutSteps {
     }
 
 
-
     @Given("I am an anonymous customer with clear cookies")
     public void iAmAnAnonymousCustomerWithClearCookies() {
         homePage = new HomePage();
@@ -147,8 +139,6 @@ public class CheckoutSteps {
                 () -> assertTrue(searchedBooks.contains(expectedBooks.get(2)), "Search result does not contain " + expectedBooks.get(2) + "."),
                 () -> assertTrue(searchedBooks.containsAll(expectedBooks), "Some of expected books are not present in the search result.")
         );
-
-        screenshot("search-result1");
     }
 
     @And("^I apply the following search filters$")
@@ -169,7 +159,6 @@ public class CheckoutSteps {
 
         assertEquals(expectedBooks, searchedBooks, "There is a difference between Expected and Actual Search Results");
 
-        screenshot("search-result2");
     }
 
     @And("I click 'Add to basket' button for product with name {string}")
@@ -192,7 +181,6 @@ public class CheckoutSteps {
                 () -> assertEquals(orderEntities.get("Total"), basketPage.getTotalPrice(),
                         "Not expected Basket Total.")
         );
-        screenshot("basket-order-summary");
     }
 
     @And("^I click 'Checkout' button on 'Basket' page$")
@@ -232,7 +220,6 @@ public class CheckoutSteps {
                         validationErrorMessages.get(4).get("Form field name")
                                 + ": Validation Error message is not displayed or differs from the Expected.")
         );
-        screenshot("validation-errors-on-checkout1");
     }
 
     @And("^the following validation error messages are displayed on 'Payment' form:$")
@@ -243,7 +230,6 @@ public class CheckoutSteps {
                 checkoutPage.paymentFieldsValidationErrorMessage(),
                 "Validation Error message for Payment fields is not displayed or differs from the Expected.");
 
-        screenshot("validation-error-payment-details");
     }
 
     @And("^Checkout order summary is as following:$")
@@ -259,7 +245,6 @@ public class CheckoutSteps {
                 () -> assertEquals(orderValues.get("Total"), checkoutPage.getCheckoutTotal(),
                         "Not expected Checkout Total.")
         );
-        screenshot("checkout-order-summary");
     }
 
     @And("^I checkout as a new customer with email \"([\\w\\.]+[+\\w+]*@\\w+\\.\\w*\\.*\\w{3})\"$")
@@ -281,7 +266,7 @@ public class CheckoutSteps {
         //checkoutPage.manualEntryAddressButtonClick();
 
         //checkoutPage.provideAddressLinesActions((String) deliveryAddressValues.get("Address line 1"),
-                //(String) deliveryAddressValues.get("Address line 2"));
+        //(String) deliveryAddressValues.get("Address line 2"));
 
         checkoutPage.provideDeliveryAddressLine2((String) deliveryAddressValues.get("Address line 2"));
         //Thread.sleep(3000);
@@ -308,7 +293,6 @@ public class CheckoutSteps {
                 () -> assertFalse(checkoutPage.isInvalidDeliveryPostcodeMessageDisplayed(),
                         "Invalid Delivery Postcode message displayed.")
         );
-        screenshot("validation-errors-on-checkout2");
     }
 
     @And("^I enter my card details$")

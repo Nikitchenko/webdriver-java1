@@ -1,5 +1,6 @@
 package com.cucumber.junit.driver;
 
+import com.codeborne.selenide.Configuration;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -23,6 +24,7 @@ public class DriverManager {
         driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(12, TimeUnit.SECONDS);
 
+        Configuration.reportsFolder = "target/selenide-reports";
         setWebDriver(driver);
 
     }
