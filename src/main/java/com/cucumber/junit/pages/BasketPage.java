@@ -1,6 +1,5 @@
 package com.cucumber.junit.pages;
 
-import com.cucumber.junit.driver.DriverManager;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -11,49 +10,37 @@ public class BasketPage extends AbstractPage {
     @FindBy(className = "item-total")
     private WebElement itemTotalElem;
 
+    @FindBy(xpath = "//dl[@class = 'delivery-text']/dd")
+    private WebElement deliveryCost;
+
     @FindBy(xpath = "//dl[@class = 'total']/dd")
     private WebElement totalPriceElem;
 
     @FindBy(xpath = "//div[@class = 'checkout-btns-wrap']/a[@href = '/payment/guest' and text() = 'Checkout']")
     private WebElement checkoutBtn;
 
-    @FindBy(xpath = "//dl[@class = 'delivery-text']/dd")
-    private WebElement deliveryCost;
-
     public void openBasketPage() {
-        DriverManager.getDriver().get(BASKET_URL);
-    }
-
-    public WebElement getItemTotalElem() {
-        return itemTotalElem;
+        openSitePage(BASKET_URL);
     }
 
     public String getItemTotal() {
         return itemTotalElem.getText();
     }
 
-    public WebElement getTotalPriceElem() {
-        return totalPriceElem;
+    public String getDeliveryCost() {
+        return getElementText(deliveryCost);
     }
 
     public String getTotalPrice() {
-        return totalPriceElem.getText();
-    }
-
-    public WebElement getCheckoutBtn() {
-        return checkoutBtn;
+        return getElementText(totalPriceElem);
     }
 
     public void checkoutBtnClick() {
-        checkoutBtn.click();
+        elementClick(checkoutBtn);
     }
 
     public CheckoutPage checkoutPageOpened() {
         return new CheckoutPage();
-    }
-
-    public String getDeliveryCost() {
-        return deliveryCost.getText();
     }
 
 }

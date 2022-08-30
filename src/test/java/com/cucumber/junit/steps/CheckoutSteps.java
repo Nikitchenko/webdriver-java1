@@ -85,12 +85,12 @@ public class CheckoutSteps {
 
     @When("^the (?:user|guest) provides valid email address \"([\\w\\.]+[+\\w+]*@\\w+\\.\\w*\\.*\\w{3})\"$")
     public void userProvidesCorrectEmailAddress(String email) {
-        checkoutPage.getCheckoutEmailAddressField().sendKeys(email);
+        checkoutPage.provideCheckoutEmail(email);
     }
 
     @When("^the (?:user|guest) clicks Buy now button$")
     public void userClicksBuyNowButton() {
-        checkoutPage.getBuyNowBtn().click();
+        checkoutPage.buyNowBtnClick();
     }
 
     @Then("^the Invalid email error( does not|) appear$")
@@ -101,6 +101,7 @@ public class CheckoutSteps {
                         "Email error appeared.")
         );
     }
+
 
     @Given("I am an anonymous customer with clear cookies")
     public void iAmAnAnonymousCustomerWithClearCookies() {
@@ -116,7 +117,7 @@ public class CheckoutSteps {
     @And("I search for {string}")
     public void iSearchFor(String book) {
         homePage.searchForBook(book);
-        searchPage = homePage.searchBtnClickJS();
+        searchPage = homePage.searchBtnClick();
     }
 
     @And("I am redirected to the {string}")
@@ -167,8 +168,8 @@ public class CheckoutSteps {
 
     @And("^I select 'Basket/Checkout' in basket pop-up$")
     public void iSelectBasketCheckoutInBasketPopUp() {
-        searchPage.basketCheckout();
-        basketPage = searchPage.basketCheckoutBtnClick();
+        searchPage.basketCheckoutBtnClick();
+        basketPage = searchPage.basketCheckout();
     }
 
     @And("^Basket order summary is as following:$")
@@ -190,7 +191,7 @@ public class CheckoutSteps {
 
     @When("^I click 'Buy now' button$")
     public void iClickBuyNowButton() {
-        checkoutPage.buyNowBtnClickJS();
+        checkoutPage.buyNowBtnClick();
     }
 
     @Then("^the following validation error messages are displayed on 'Delivery Address' form:$")
@@ -255,17 +256,16 @@ public class CheckoutSteps {
     public void iFillDeliveryAddressInformationManually(@Transpose Map deliveryAddressValues) {
 
         checkoutPage.provideFullName((String) deliveryAddressValues.get("Full name"));
-        checkoutPage.setDeliveryCountry((String) deliveryAddressValues.get("Delivery country"));
 
-        //checkoutPage.manualEntryAddressButtonClick();
+        checkoutPage.provideDeliveryCountry((String) deliveryAddressValues.get("Delivery country"));
 
-        checkoutPage.provideAddressLinesActions((String) deliveryAddressValues.get("Address line 1"),
-                (String) deliveryAddressValues.get("Address line 2"));
+        checkoutPage.provideDeliveryAddressLine1((String) deliveryAddressValues.get("Address line 1"));
+        checkoutPage.provideDeliveryAddressLine2((String) deliveryAddressValues.get("Address line 2"));
 
         checkoutPage.provideDeliveryCity((String) deliveryAddressValues.get("Town/City"));
         checkoutPage.provideDeliveryCounty((String) deliveryAddressValues.get("County/State"));
 
-        checkoutPage.providePostcodeActions((String) deliveryAddressValues.get("Postcode"));
+        checkoutPage.provideDeliveryPostcode((String) deliveryAddressValues.get("Postcode"));
     }
 
     @Then("^there is no validation error messages displayed on 'Delivery Address' form$")

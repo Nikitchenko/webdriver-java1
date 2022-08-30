@@ -20,7 +20,11 @@ buildNumber.properties
 # Whole .idea
 .idea/
 
+# Whole logs
+logs/
 
+# Whole logs
+build/
 
 
 # Gradle and Maven with auto-import

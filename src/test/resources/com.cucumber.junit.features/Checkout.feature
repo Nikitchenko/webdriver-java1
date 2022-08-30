@@ -18,7 +18,7 @@ Feature: Checkout
 
     Examples:
       | isbn          | itemPrice | totalPrice | vat    |
-      | 9781783982707 | 32,50 €   | 32,50 €    | 0,00 € |
+      | 9781783982707 | 33,25 €   | 33,25 €    | 0,00 € |
       | 9780131872486 | 80,47 €   | 80,47 €    | 0,00 € |
       | 9780596158101 | 75,54 €   | 75,54 €    | 0,00 € |
 
@@ -48,26 +48,26 @@ Feature: Checkout
     And I am redirected to the "Basket page"
     And Basket order summary is as following:
       | Delivery cost | Total   |
-      | FREE          | 70,82 € |
+      | FREE          | 84,99 € |
     And I click 'Checkout' button on 'Basket' page
     Then I am redirected to the "Checkout page"
     When I click 'Buy now' button
     Then the following validation error messages are displayed on 'Delivery Address' form:
-      | Form field name | validation error message                              |
-      | Email address   | Please enter your Email address                       |
-      | Full name       | Please enter your Full name                           |
-      | Address line 1  | Please enter your Address line 1                      |
-      | Town/City       | Please enter your Town/City                           |
-      | Postcode/ZIP    | Please enter your postcode/ZIP or write 'No Postcode' |
+      | Form field name | validation error message                                 |
+      | Email address   | Please enter your Email address (for order confirmation) |
+      | Full name       | Please enter your Full name                              |
+      | Address line 1  | Please enter your Address line 1                         |
+      | Town/City       | Please enter your Town/City                              |
+      | Postcode/ZIP    | Please enter your postcode/ZIP or write 'No Postcode'    |
     And the following validation error messages are displayed on 'Payment' form:
       | Please enter your card number, Please enter your card's expiration date, Please enter your CVV |
     And Checkout order summary is as following:
       | Sub-total | Delivery | VAT    | Total   |
-      | 70,82 €   | FREE     | 0,00 € | 70,82 € |
+      | 84,99 €   | FREE     | 0,00 € | 84,99 € |
     And I checkout as a new customer with email "test@user.com"
     And I fill delivery address information manually:
       | Full name | Delivery country | Address line 1   | Address line 2   | Town/City | County/State | Postcode |
-      | John      | Poland           | Random address 1 | Random address 2 | Kyiv      | Random State | 12345    |
+      | John Barr | Poland           | Random address 1 | Random address 2 | Kyiv      | Random State | 12345    |
     Then there is no validation error messages displayed on 'Delivery Address' form
     And I enter my card details
       | Card Type    | Visa             |
