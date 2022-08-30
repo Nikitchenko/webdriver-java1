@@ -253,23 +253,15 @@ public class CheckoutSteps {
     }
 
     @And("^I fill delivery address information manually:$")
-    public void iFillDeliveryAddressInformationManually(@Transpose Map deliveryAddressValues) throws InterruptedException {
+    public void iFillDeliveryAddressInformationManually(@Transpose Map deliveryAddressValues) {
 
         checkoutPage.provideFullName((String) deliveryAddressValues.get("Full name"));
 
+        checkoutPage.provideDeliveryCountry((String) deliveryAddressValues.get("Delivery country"));
+
         checkoutPage.provideDeliveryAddressLine1((String) deliveryAddressValues.get("Address line 1"));
-        //Thread.sleep(3000);
-        //checkoutPage.provideCountryJS((String) deliveryAddressValues.get("Delivery country"));
-        checkoutPage.setDeliveryCountry((String) deliveryAddressValues.get("Delivery country"));
-        System.out.println((String) deliveryAddressValues.get("Delivery country"));
-
-        //checkoutPage.manualEntryAddressButtonClick();
-
-        //checkoutPage.provideAddressLinesActions((String) deliveryAddressValues.get("Address line 1"),
-        //(String) deliveryAddressValues.get("Address line 2"));
-
         checkoutPage.provideDeliveryAddressLine2((String) deliveryAddressValues.get("Address line 2"));
-        //Thread.sleep(3000);
+
         checkoutPage.provideDeliveryCity((String) deliveryAddressValues.get("Town/City"));
         checkoutPage.provideDeliveryCounty((String) deliveryAddressValues.get("County/State"));
 

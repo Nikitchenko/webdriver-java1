@@ -35,8 +35,8 @@ public class DriverManager {
     }
 
     public static void quitDriver() {
-        Optional.ofNullable(getDriver()).ifPresent(webDriver -> {
-            webDriver.quit();
-        });
+        Optional.ofNullable(getDriver()).ifPresent(webDriver ->
+            webDriver.quit()
+        );
     }
 }

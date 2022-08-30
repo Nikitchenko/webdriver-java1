@@ -1,12 +1,9 @@
 package com.cucumber.junit.pages;
 
 import com.cucumber.junit.driver.DriverManager;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import static com.codeborne.selenide.Selenide.$;
 import static com.cucumber.junit.constants.Constants.CHECKOUT_URL;
 
 public class CheckoutPage extends AbstractPage {
@@ -167,7 +164,8 @@ public class CheckoutPage extends AbstractPage {
     }
 
 
-    public void setDeliveryCountry(String deliveryCountry) {
+    public void provideDeliveryCountry(String deliveryCountry) {
+
         selectOptionInSelector(deliveryCountryDropdown, deliveryCountry);
     }
 
@@ -242,41 +240,6 @@ public class CheckoutPage extends AbstractPage {
 
     public Boolean isInvalidDeliveryCountryMessageDisplayed() {
         return isElementDisplayed(invalidDeliveryCountryErrorElem);
-    }
-
-    
-
-    //public void provideAddressLinesActions (String line1, String line2) {
-    //Actions builder = new Actions(DriverManager.getDriver());
-    //Action seriesOfActions = builder
-    //.moveToElement(deliveryAddressLine1Input).click().sendKeys(line1)
-    //.moveToElement(deliveryAddressLine2Input).click().sendKeys(line2)
-    //.build();
-    //seriesOfActions.perform();
-    //}
-
-    //public void providePostcodeActions(String postcode) {
-    //Actions builder = new Actions(DriverManager.getDriver());
-    //Action seriesOfActions = builder
-    //.moveToElement(deliveryPostcodeInput).doubleClick().sendKeys(postcode).sendKeys(Keys.TAB)
-    //.build();
-    //seriesOfActions.perform();
-    //}
-
-    //public void buyNowBtnClickJS() {
-    //JavascriptExecutor js = (JavascriptExecutor)DriverManager.getDriver();
-    //js.executeScript("window.scrollBy(0,3000)");
-    //js.executeScript("arguments[0].click();", buyNowBtn);
-    //}
-
-    public void provideCountryJS(String deliveryCountry) {
-        $(By.xpath("//*[@id=\"delivery-CountryDropdown\"]/option[77]"));
-        //*[@id="delivery-CountryDropdown"]/option[77]
-        JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
-        js.executeScript("window.scrollBy(0,3000)");
-        js.executeScript("arguments[0].click();", deliveryCountryDropdown);
-        js.executeScript("arguments[0].click();", $(By.xpath("//*[@id=\"delivery-CountryDropdown\"]/option[77]")));
-
     }
 
 }
