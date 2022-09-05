@@ -17,7 +17,7 @@ public class ScreenshotHook {
 
     @After
     public void takeScreenshot(Scenario scenario){
-        //if (scenario.isFailed()) {
+        if (scenario.isFailed()) {
             scenario.log(DriverManager.getDriver().getCurrentUrl());
             // log instead of write
 
@@ -25,6 +25,6 @@ public class ScreenshotHook {
             byte[] decoded = Base64.getDecoder().decode(screenshotAsBase64);
             scenario.attach(decoded, PNG_FILE_EXTENSION, scenario.getName());
             // attach instead of embed
-        //}
+        }
     }
 }
